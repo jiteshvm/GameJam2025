@@ -22,3 +22,7 @@ Notes
 - If you’re on Windows, ensure your editor is configured for LF on project files.
 - After cloning, each teammate should run `git lfs install` once on their machine.
 
+
+Manual
+- Quick Start: docs/Manual/QuickStart.md
+- Daily Flow: docs/Manual/DailyFlow.md
