@@ -1,13 +1,12 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bw62u0ucba2bg"]
 
-[ext_resource type="Script" path="res://features/diorama/CameraController3D.gd" id="1_cam"]
+[ext_resource type="Script" uid="uid://05lx24nrvhqn" path="res://features/diorama/CameraController3D.gd" id="1_cam"]
 
 [node name="CameraRig" type="Node3D"]
 script = ExtResource("1_cam")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -10)
-rotation_degrees = Vector3(-35, 45, 0)
+transform = Transform3D(0.70710677, -0.4055798, 0.579228, 0, 0.81915206, 0.57357645, -0.70710677, -0.4055798, 0.579228, 10, 10, 10)
 projection = 1
-size = 12.0
 current = true
+size = 12.0

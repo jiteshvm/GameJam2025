@@ -1,11 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://ct3oumleb5jo"]
 
-[ext_resource type="PackedScene" path="res://features/diorama/Player.tscn" id="1_plyr"]
-[ext_resource type="PackedScene" path="res://features/diorama/CameraRig.tscn" id="2_camr"]
+[ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/Player.tscn" id="1_plyr"]
+[ext_resource type="PackedScene" uid="uid://bw62u0ucba2bg" path="res://features/diorama/CameraRig.tscn" id="2_camr"]
 [ext_resource type="Material" path="res://features/diorama/ground_material.tres" id="3_mat"]
 
 [sub_resource type="PlaneMesh" id="4_plane"]
-size = Vector2(2, 2)
 
 [sub_resource type="BoxShape3D" id="5_box"]
 size = Vector3(20, 0.2, 20)
@@ -15,9 +14,9 @@ size = Vector3(20, 0.2, 20)
 [node name="World" type="Node3D" parent="."]
 
 [node name="Ground" type="MeshInstance3D" parent="World"]
-mesh = SubResource("4_plane")
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 material_override = ExtResource("3_mat")
-scale = Vector3(10, 1, 10)
+mesh = SubResource("4_plane")
 
 [node name="GroundBody" type="StaticBody3D" parent="World"]
 
@@ -27,3 +26,4 @@ shape = SubResource("5_box")
 [node name="Player" parent="." instance=ExtResource("1_plyr")]
 
 [node name="CameraRig" parent="." instance=ExtResource("2_camr")]
+transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
