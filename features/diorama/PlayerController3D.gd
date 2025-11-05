@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 signal moved(new_global_position: Vector3)
 
-@export var max_speed: float = 4.0
+@export var max_speed: float = 6.0
 @export var accel: float = 14.0
 @export var decel: float = 18.0
 @export var gamepad_deadzone: float = 0.18

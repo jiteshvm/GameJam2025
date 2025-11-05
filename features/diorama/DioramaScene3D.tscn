@@ -1,15 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://ct3oumleb5jo"]
+[gd_scene load_steps=9 format=3 uid="uid://ct3oumleb5jo"]
 
 [ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/Player.tscn" id="1_plyr"]
 [ext_resource type="PackedScene" uid="uid://bw62u0ucba2bg" path="res://features/diorama/CameraRig.tscn" id="2_camr"]
 [ext_resource type="Material" path="res://features/diorama/ground_material.tres" id="3_mat"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qq0fv"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_67ne1"]
+sky_material = SubResource("ProceduralSkyMaterial_qq0fv")
+
+[sub_resource type="Environment" id="Environment_yd7dk"]
+background_mode = 2
+sky = SubResource("Sky_67ne1")
+tonemap_mode = 2
+
 [sub_resource type="PlaneMesh" id="4_plane"]
 
 [sub_resource type="BoxShape3D" id="5_box"]
-size = Vector3(20, 0.2, 20)
+size = Vector3(40, 0.2, 40)
 
 [node name="DioramaScene3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_yd7dk")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.298067, 0)
+omni_range = 180.062
 
 [node name="World" type="Node3D" parent="."]
 
