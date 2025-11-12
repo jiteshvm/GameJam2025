@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cix450eg4kftb"]
+[gd_scene load_steps=12 format=3 uid="uid://cix450eg4kftb"]
 
 [ext_resource type="PackedScene" uid="uid://bc5bcxbqmbply" path="res://assets/First Level/Ceiling_Level_01_Low_01.glb" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://sag6lhfj25i2" path="res://assets/First Level/Exterior_Walls_Base_Level_01_Low_01.glb" id="2_c01mt"]
@@ -9,34 +9,78 @@
 [ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/Player.tscn" id="7_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bw62u0ucba2bg" path="res://features/diorama/CameraRig.tscn" id="8_jlsqs"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jlsqs"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_q8u5g"]
+sky_material = SubResource("ProceduralSkyMaterial_jlsqs")
+
+[sub_resource type="Environment" id="Environment_lhr70"]
+background_mode = 2
+sky = SubResource("Sky_q8u5g")
+tonemap_mode = 2
+glow_enabled = true
+
 [node name="First_Level_Main_Structure" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lhr70")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
 [node name="Player" parent="." instance=ExtResource("7_nxtc6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.234022, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55322194, 0)
 floor_stop_on_slope = false
 
 [node name="CameraRig" parent="." instance=ExtResource("8_jlsqs")]
 
-[node name="Ceiling_Level_01_Low_012" parent="." instance=ExtResource("1_vcsgt")]
+[node name="LevelGeometry" type="Node3D" parent="."]
 
-[node name="Exterior_Walls_Base_Level_01_Low_01" parent="." instance=ExtResource("2_c01mt")]
+[node name="Ceiling_Level_01_Low_012" parent="LevelGeometry" instance=ExtResource("1_vcsgt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0062031746, 0, 0.7058165)
 
-[node name="Exterior_Walls_Level_01_Low_01" parent="." instance=ExtResource("3_nxtc6")]
+[node name="Ceiling_Level_01_Low_01" parent="LevelGeometry/Ceiling_Level_01_Low_012" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.654739, 2.0707002, -4.7482357)
 
-[node name="Floor_Level_01_Low_01" parent="." instance=ExtResource("4_jlsqs")]
+[node name="Exterior_Walls_Base_Level_01_Low_01" parent="LevelGeometry" instance=ExtResource("2_c01mt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6549778)
 
-[node name="interior_Walls_Level_01_Low_01" parent="." instance=ExtResource("5_q8u5g")]
+[node name="Exterior_Walls_Base_Level_01_Low_01" parent="LevelGeometry/Exterior_Walls_Base_Level_01_Low_01" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.609352, -3.696386, -3.1319609)
+
+[node name="Exterior_Walls_Level_01_Low_01" parent="LevelGeometry" instance=ExtResource("3_nxtc6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3636732)
+
+[node name="Exterior_Walls_Level_01_Low_01" parent="LevelGeometry/Exterior_Walls_Level_01_Low_01" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2062426, 0.8695944, -3.7603552)
+
+[node name="Floor_Level_01_Low_01" parent="LevelGeometry" instance=ExtResource("4_jlsqs")]
+transform = Transform3D(-1, -8.940697e-08, 0, 8.940697e-08, -1, 0, 0, 0, 1, 2.3658447, 9.323284, 4.483779)
+
+[node name="Floor_Level_01_Low_01" parent="LevelGeometry/Floor_Level_01_Low_01" index="0"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -5.309419, 8.971612, -8.487893)
+
+[node name="interior_Walls_Level_01_Low_01" parent="LevelGeometry" instance=ExtResource("5_q8u5g")]
+
+[node name="interior_Walls_Level_01_Low_01" parent="LevelGeometry/interior_Walls_Level_01_Low_01" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.839811, 0.86948013, -4.397478)
 
 [node name="Barrels" type="Node3D" parent="."]
 
 [node name="Barrel_Low_01" parent="Barrels" instance=ExtResource("6_c01mt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.07646, 0, -1.7044303)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7365317, 0.39723206, -3.8984916)
 
 [node name="Barrel_Low_02" parent="Barrels" instance=ExtResource("6_c01mt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9346895, 0, -1.7083668)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5947614, 0.39723206, -3.9024282)
 
 [node name="Barrel_Low_03" parent="Barrels" instance=ExtResource("6_c01mt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7929192, 0, -1.7123032)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.547009, 0.39723206, -3.9063644)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-omni_range = 414.03
+[editable path="LevelGeometry/Ceiling_Level_01_Low_012"]
+[editable path="LevelGeometry/Exterior_Walls_Base_Level_01_Low_01"]
+[editable path="LevelGeometry/Exterior_Walls_Level_01_Low_01"]
+[editable path="LevelGeometry/Floor_Level_01_Low_01"]
+[editable path="LevelGeometry/interior_Walls_Level_01_Low_01"]

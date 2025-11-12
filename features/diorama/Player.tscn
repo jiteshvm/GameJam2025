@@ -5,19 +5,20 @@
 
 [sub_resource type="CapsuleShape3D" id="2_xcap"]
 margin = 0.1
-height = 1.0
+radius = 0.42749023
+height = 0.85498047
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("2_pctrl")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48547655, 0)
 pixel_size = 0.001
 billboard = 1
-double_sided = false
+alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("2_n7ykp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44261092, 0)
 shape = SubResource("2_xcap")

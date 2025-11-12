@@ -1,15 +1,8 @@
-[gd_resource type="Resource" script_class="ComboDB" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ComboDB" load_steps=2 format=3 uid="uid://b2ocna6u7s118"]
 
-[ext_resource type="Script" path="res://features/combat/ComboDB.gd" id="1"]
+[ext_resource type="Script" uid="uid://c3fh3vs8ccjdy" path="res://features/combat/ComboDB.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
-tokens = [ &"attack", &"push", &"pull", &"microwave" ]
-combos = [
-	[ &"attack", &"attack" ],
-	[ &"attack", &"attack", &"push" ],
-	[ &"pull", &"attack", &"attack", &"push" ],
-	[ &"microwave", &"pull", &"attack", &"attack", &"push" ],
-	[ &"attack", &"microwave", &"attack", &"push", &"pull", &"push" ],
-]
-
+tokens = [&"attack", &"push", &"pull", &"microwave"]
+combos = [[&"attack", &"attack"], [&"attack", &"attack", &"push"], [&"pull", &"attack", &"attack", &"push"], [&"microwave", &"pull", &"attack", &"attack", &"push"], [&"attack", &"microwave", &"attack", &"push", &"pull", &"push"]]

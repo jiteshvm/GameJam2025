@@ -10,9 +10,6 @@ Desktop.ini
 .idea/
 .vscode/
 
-# Godot 3.x legacy import files (harmless for 4.x but safe to ignore)
-*.import
-
 # Temporary files
 *.tmp
 *.temp
