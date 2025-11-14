@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cix450eg4kftb"]
+[gd_scene load_steps=8 format=3 uid="uid://cix450eg4kftb"]
 
 [ext_resource type="PackedScene" uid="uid://bc5bcxbqmbply" path="res://assets/First Level/Ceiling_Level_01_Low_01.glb" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://sag6lhfj25i2" path="res://assets/First Level/Exterior_Walls_Base_Level_01_Low_01.glb" id="2_c01mt"]
@@ -6,20 +6,27 @@
 [ext_resource type="PackedScene" uid="uid://p1l3mqqgodlj" path="res://assets/First Level/Floor_Level_01_Low_01.glb" id="4_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://3a0bat1nprjt" path="res://assets/First Level/interior_Walls_Level_01_Low_01.glb" id="5_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://b2kd6oh6rdfto" path="res://assets/Props/Barrel_Low_01.glb" id="6_c01mt"]
+[ext_resource type="PackedScene" uid="uid://snwiwm4l33mq" path="res://assets/Props/Complete_Scene_01.glb" id="7_nxtc6"]
 
 [node name="First_Level_Main_Structure" type="Node3D"]
 
 [node name="Ceiling_Level_01_Low_012" parent="." instance=ExtResource("1_vcsgt")]
+visible = false
 
 [node name="Exterior_Walls_Base_Level_01_Low_01" parent="." instance=ExtResource("2_c01mt")]
+visible = false
 
 [node name="Exterior_Walls_Level_01_Low_01" parent="." instance=ExtResource("3_nxtc6")]
+visible = false
 
 [node name="Floor_Level_01_Low_01" parent="." instance=ExtResource("4_jlsqs")]
+visible = false
 
 [node name="interior_Walls_Level_01_Low_01" parent="." instance=ExtResource("5_q8u5g")]
+visible = false
 
 [node name="Barrels" type="Node3D" parent="."]
+visible = false
 
 [node name="Barrel_Low_01" parent="Barrels" instance=ExtResource("6_c01mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.07646, 0, -1.7044303)
@@ -29,3 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9346895, 0, -1.7083668)
 
 [node name="Barrel_Low_03" parent="Barrels" instance=ExtResource("6_c01mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7929192, 0, -1.7123032)
+
+[node name="Complete_Scene_01" type="Node3D" parent="."]
+
+[node name="Complete_Scene_01" parent="Complete_Scene_01" instance=ExtResource("7_nxtc6")]
