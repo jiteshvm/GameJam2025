@@ -1,0 +1,2 @@
+class_name PlayerDisappearedTrigger
+extends EnemyState.StateTransitionTrigger

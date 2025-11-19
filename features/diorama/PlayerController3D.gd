@@ -1,3 +1,4 @@
+class_name PlayerController3D
 extends CharacterBody3D
 
 signal moved(new_global_position: Vector3)

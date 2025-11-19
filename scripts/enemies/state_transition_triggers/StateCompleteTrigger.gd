@@ -1,0 +1,2 @@
+class_name StateCompleteTrigger
+extends EnemyState.StateTransitionTrigger

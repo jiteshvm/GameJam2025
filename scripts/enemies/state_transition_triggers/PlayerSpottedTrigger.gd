@@ -1,0 +1,2 @@
+class_name PlayerSpottedTrigger
+extends EnemyState.StateTransitionTrigger

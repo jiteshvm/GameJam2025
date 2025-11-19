@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CollisionLayersDefinition" load_steps=2 format=3 uid="uid://bc8dw0jj27esb"]
+
+[ext_resource type="Script" uid="uid://det388m8ws2rh" path="res://scripts/CollisionLayersDefinition.gd" id="1_g7fhd"]
+
+[resource]
+script = ExtResource("1_g7fhd")
+_player_layer = 2
+_enemy_layer = 4
+_walls_layer = 1
+metadata/_custom_type_script = "uid://det388m8ws2rh"

@@ -8,7 +8,9 @@ margin = 0.1
 radius = 0.42749023
 height = 0.85498047
 
-[node name="Player" type="CharacterBody3D"]
+[node name="PlayerController3D" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 33
 script = ExtResource("2_pctrl")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]

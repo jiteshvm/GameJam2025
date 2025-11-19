@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://ct3oumleb5jo"]
 
-[ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/Player.tscn" id="1_plyr"]
+[ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/PlayerController3D.tscn" id="1_plyr"]
 [ext_resource type="PackedScene" uid="uid://bw62u0ucba2bg" path="res://features/diorama/CameraRig.tscn" id="2_camr"]
 [ext_resource type="Material" uid="uid://buh50wuuxbatu" path="res://features/diorama/ground_material.tres" id="3_mat"]
 
