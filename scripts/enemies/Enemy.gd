@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 @export_group("Nodes")
 @export var _animation_player: AnimationPlayer
+@export var _spawn_animation: Animation
 @export var _charge_attack_animation: Animation
 @export var _attacking_animation: Animation
 @export var _navigation_agent_3d: NavigationAgent3D
@@ -11,31 +12,40 @@ extends CharacterBody3D
 @export var _debug_label_3d: Label3D
 @export_group("Variables")
 @export var _line_of_sight_range_scale: float = 7.0
-@export var _line_of_sight_recalculation_interval_seconds: float = 0.2
 @export var _target_position_recalculation_interval_seconds: float = 0.2
-@export var _base_move_speed: float = 3.0
-@export var _default_friction: float = 0.0
+@export_subgroup("Movement")
+@export var _base_move_acceleration: float = 100.0
+@export var _base_desired_move_speed: float = 2.5
+@export var _default_friction: float = 10.0
 @export_subgroup("Chasing Player")
-@export var _chase_player_desired_distance: float = 2.0
+@export var _chase_player_desired_distance: float = 3.0
+@export var _max_chase_duration_seconds: float = 5.0
+@export var _chase_break_duration_seconds: float = 2.0
 @export_subgroup("Attacking Player")
 @export var _attack_cooldown_seconds: float = 1.0
+@export var _attack_apply_force_magnitude: float = 9.0
 @export var _attack_friction: float = 10.0
+@export_subgroup("Hitstunned")
+@export var _hitstunned_push_force_magnitude: float = 4.0
+@export var _hitstunned_duration_seconds: float = 0.5
 
 # State Machine
 var _root_state: EnemyState = null
 var _blackboard: EnemyStateBlackboard = null
 var _friction: float = 0.0
 
-func _ready() -> void:
+func init(navigation_region_3d: NavigationRegion3D) -> void:
 	var player_layer: int = CollisionLayersManager.get_instance().get_collision_layers_definition().get_player_layer()
 	var walls_layer: int = CollisionLayersManager.get_instance().get_collision_layers_definition().get_walls_layer()
 	_detection_range_shape_cast_3d.collision_mask = player_layer
 	_line_of_sight_ray_cast_3d.collision_mask = player_layer | walls_layer
+	
+	set_friction(_default_friction)
 
-func init(navigation_region_3d: NavigationRegion3D) -> void:
 	_blackboard = GeneralEnemyStateBlackboard.new()
 	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
 	general_enemy_state_blackboard.navigation_region_3d = navigation_region_3d
+	general_enemy_state_blackboard.player = get_tree().get_first_node_in_group("player")
 
 	_detection_range_shape_cast_3d.set_scale(Vector3(_line_of_sight_range_scale, _line_of_sight_range_scale, _line_of_sight_range_scale))
 
@@ -47,25 +57,72 @@ func _setup_states() -> void:
 	root_state.setup_init("Root", self)
 	_root_state = root_state
 
-	var watchful_state: EnemyState = WatchfulEnemyState.new()
-	watchful_state.setup_init("Watchful", self)
-	root_state.setup_add_sub_state(watchful_state)
+	var play_spawn_animation_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
+	play_spawn_animation_state.setup_init("PlaySpawnAnimation", self)
+	play_spawn_animation_state.setup_state_vars(_animation_player, _spawn_animation)
+	root_state.setup_add_sub_state(play_spawn_animation_state)
 
-	var hunting_state: EnemyState = EmptyEnemyState.new()
-	hunting_state.setup_init("Hunting", self)
+	var wait_for_spawn_animation_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
+	wait_for_spawn_animation_state.setup_init("WaitForSpawnAnimation", self)
+	wait_for_spawn_animation_state.setup_state_vars(_animation_player, _spawn_animation)
+	root_state.setup_add_sub_state(wait_for_spawn_animation_state)
+	root_state.setup_add_state_transition(play_spawn_animation_state, wait_for_spawn_animation_state, StateCompleteTrigger.new())
+
+	var hitstunned_state: HitstunnableEnemyState = HitstunnableEnemyState.new()
+	hitstunned_state.setup_init("HitstunnableHitstunned", self)
+	root_state.setup_add_sub_state(hitstunned_state)
+	root_state.setup_add_state_transition(hitstunned_state, hitstunned_state, HitstunnedTrigger.new())
+
+	var hitstunned_set_force_direction_to_player_state: SetForceDirectionToPlayerEnemyState = SetForceDirectionToPlayerEnemyState.new()
+	hitstunned_set_force_direction_to_player_state.setup_init("HitstunnedSetForceDirectionToPlayer", self)
+	hitstunned_set_force_direction_to_player_state.setup_state_vars(false)
+	hitstunned_state.setup_add_sub_state(hitstunned_set_force_direction_to_player_state)
+
+	hitstunned_state.setup_state_vars(hitstunned_set_force_direction_to_player_state)
+
+	var hitstunned_push_state: ApplyForceEnemyState = ApplyForceEnemyState.new()
+	hitstunned_push_state.setup_init("HitstunnedPush", self)
+	hitstunned_push_state.setup_state_vars(_hitstunned_push_force_magnitude)
+	hitstunned_state.setup_add_sub_state(hitstunned_push_state)
+	hitstunned_state.setup_add_state_transition(hitstunned_set_force_direction_to_player_state, hitstunned_push_state, StateCompleteTrigger.new())
+
+	var hitstunned_waiting_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
+	hitstunned_waiting_state.setup_init("HitstunnedWaiting", self)
+	hitstunned_waiting_state.setup_state_vars(_hitstunned_duration_seconds)
+	hitstunned_state.setup_add_sub_state(hitstunned_waiting_state)
+	hitstunned_state.setup_add_state_transition(hitstunned_push_state, hitstunned_waiting_state, StateCompleteTrigger.new())
+
+	var hunting_state: HitstunnableEnemyState = HitstunnableEnemyState.new()
+	hunting_state.setup_init("HitstunnableHunting", self)
 	root_state.setup_add_sub_state(hunting_state)
-	root_state.setup_add_state_transition(watchful_state, hunting_state, PlayerSpottedTrigger.new())
-	root_state.setup_add_state_transition(hunting_state, watchful_state, PlayerDisappearedTrigger.new())
+	root_state.setup_add_state_transition(wait_for_spawn_animation_state, hunting_state, StateCompleteTrigger.new())
+	root_state.setup_add_state_transition(hitstunned_state, hunting_state, StateCompleteTrigger.new())
+	root_state.setup_add_state_transition(hunting_state, hitstunned_state, HitstunnedTrigger.new())
 
-	var chase_player_state: EnemyState = ChasePlayerEnemyState.new()
+	var chase_player_state: ChasePlayerEnemyState = ChasePlayerEnemyState.new()
 	chase_player_state.setup_init("ChasePlayer", self)
 	hunting_state.setup_add_sub_state(chase_player_state)
+
+	hunting_state.setup_state_vars(chase_player_state)
+
+	var chase_break_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
+	chase_break_state.setup_init("ChaseBreak", self)
+	chase_break_state.setup_state_vars(_chase_break_duration_seconds)
+	hunting_state.setup_add_sub_state(chase_break_state)
+	hunting_state.setup_add_state_transition(chase_player_state, chase_break_state, MaxChaseDurationReachedTrigger.new())
+	hunting_state.setup_add_state_transition(chase_break_state, chase_player_state, StateCompleteTrigger.new())
+
+	var wait_for_attack_queue_state: WaitForAttackQueueEnemyState = WaitForAttackQueueEnemyState.new()
+	wait_for_attack_queue_state.setup_init("WaitForAttackQueue", self)
+	hunting_state.setup_add_sub_state(wait_for_attack_queue_state)
+	hunting_state.setup_add_state_transition(chase_player_state, wait_for_attack_queue_state, PlayerReachedTrigger.new())
+	hunting_state.setup_add_state_transition(wait_for_attack_queue_state, chase_player_state, EnemyFailAttackQueueTrigger.new())
 
 	var charge_attack_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	charge_attack_state.setup_init("ChargeAttack", self)
 	charge_attack_state.setup_state_vars(_animation_player, _charge_attack_animation)
 	hunting_state.setup_add_sub_state(charge_attack_state)
-	hunting_state.setup_add_state_transition(chase_player_state, charge_attack_state, PlayerReachedTrigger.new())
+	hunting_state.setup_add_state_transition(wait_for_attack_queue_state, charge_attack_state, EnemySuccessAttackQueueTrigger.new())
 
 	var wait_for_charge_attack_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
 	wait_for_charge_attack_state.setup_init("WaitForChargeAttack", self)
@@ -73,15 +130,21 @@ func _setup_states() -> void:
 	hunting_state.setup_add_sub_state(wait_for_charge_attack_state)
 	hunting_state.setup_add_state_transition(charge_attack_state, wait_for_charge_attack_state, StateCompleteTrigger.new())
 
+	var set_force_direction_to_player_state: SetForceDirectionToPlayerEnemyState = SetForceDirectionToPlayerEnemyState.new()
+	set_force_direction_to_player_state.setup_init("SetForceDirectionToPlayer", self)
+	set_force_direction_to_player_state.setup_state_vars(true)
+	hunting_state.setup_add_sub_state(set_force_direction_to_player_state)
+	hunting_state.setup_add_state_transition(wait_for_charge_attack_state, set_force_direction_to_player_state, StateCompleteTrigger.new())
+
 	var attacking_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	attacking_state.setup_init("Attacking", self)
 	attacking_state.setup_state_vars(_animation_player, _attacking_animation)
 	hunting_state.setup_add_sub_state(attacking_state)
-	hunting_state.setup_add_state_transition(wait_for_charge_attack_state, attacking_state, StateCompleteTrigger.new())
+	hunting_state.setup_add_state_transition(set_force_direction_to_player_state, attacking_state, StateCompleteTrigger.new())
 
 	var attack_apply_force_state: ApplyForceEnemyState = ApplyForceEnemyState.new()
 	attack_apply_force_state.setup_init("AttackApplyForce", self)
-	attack_apply_force_state.setup_state_vars(10.0)
+	attack_apply_force_state.setup_state_vars(_attack_apply_force_magnitude)
 	hunting_state.setup_add_sub_state(attack_apply_force_state)
 	hunting_state.setup_add_state_transition(attacking_state, attack_apply_force_state, StateCompleteTrigger.new())
 
@@ -91,23 +154,22 @@ func _setup_states() -> void:
 	hunting_state.setup_add_sub_state(attack_set_friction_state)
 	hunting_state.setup_add_state_transition(attack_apply_force_state, attack_set_friction_state, StateCompleteTrigger.new())
 
+	var consume_attack_queue_state: ConsumeAttackQueueEnemyState = ConsumeAttackQueueEnemyState.new()
+	consume_attack_queue_state.setup_init("ConsumeAttackQueue", self)
+	hunting_state.setup_add_sub_state(consume_attack_queue_state)
+	hunting_state.setup_add_state_transition(attack_set_friction_state, consume_attack_queue_state, StateCompleteTrigger.new())
+
 	var wait_for_attacking_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
 	wait_for_attacking_state.setup_init("WaitForAttacking", self)
 	wait_for_attacking_state.setup_state_vars(_animation_player, _attacking_animation)
 	hunting_state.setup_add_sub_state(wait_for_attacking_state)
-	hunting_state.setup_add_state_transition(attack_set_friction_state, wait_for_attacking_state, StateCompleteTrigger.new())
-
-	var attack_set_velocity_state: SetVelocityEnemyState = SetVelocityEnemyState.new()
-	attack_set_velocity_state.setup_init("AttackSetVelocity", self)
-	attack_set_velocity_state.setup_state_vars(Vector3.ZERO)
-	hunting_state.setup_add_sub_state(attack_set_velocity_state)
-	hunting_state.setup_add_state_transition(wait_for_attacking_state, attack_set_velocity_state, StateCompleteTrigger.new())
+	hunting_state.setup_add_state_transition(consume_attack_queue_state, wait_for_attacking_state, StateCompleteTrigger.new())
 
 	var attack_restore_friction_state: SetFrictionEnemyState = SetFrictionEnemyState.new()
 	attack_restore_friction_state.setup_init("AttackRestoreFriction", self)
 	attack_restore_friction_state.setup_state_vars(_default_friction)
 	hunting_state.setup_add_sub_state(attack_restore_friction_state)
-	hunting_state.setup_add_state_transition(attack_set_velocity_state, attack_restore_friction_state, StateCompleteTrigger.new())
+	hunting_state.setup_add_state_transition(wait_for_attacking_state, attack_restore_friction_state, StateCompleteTrigger.new())
 
 	var attack_cooldown_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
 	attack_cooldown_state.setup_init("AttackCooldown", self)
@@ -125,17 +187,23 @@ func get_navigation_agent_3d() -> NavigationAgent3D:
 func get_debug_label_3d() -> Label3D:
 	return _debug_label_3d
 
-func get_line_of_sight_recalculation_interval_seconds() -> float:
-	return _line_of_sight_recalculation_interval_seconds
-
 func get_target_position_recalculation_interval_seconds() -> float:
 	return _target_position_recalculation_interval_seconds
 
-func get_base_move_speed() -> float:
-	return _base_move_speed
+func get_base_move_acceleration() -> float:
+	return _base_move_acceleration
+
+func get_base_desired_move_speed() -> float:
+	return _base_desired_move_speed
 
 func get_chase_player_desired_distance() -> float:
 	return _chase_player_desired_distance
+
+func get_max_chase_duration_seconds() -> float:
+	return _max_chase_duration_seconds
+
+func get_chase_break_duration_seconds() -> float:
+	return _chase_break_duration_seconds
 
 func set_friction(friction: float) -> void:
 	_friction = friction

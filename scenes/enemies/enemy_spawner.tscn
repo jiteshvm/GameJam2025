@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0vb7simuvgps"]
+
+[ext_resource type="Script" uid="uid://bbneqn8220k0i" path="res://scripts/enemies/EnemySpawner.gd" id="1_nsgdp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nsgdp"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_nsgdp"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nsgdp"]
+transparency = 1
+depth_draw_mode = 1
+albedo_color = Color(0.56528145, 0.53029776, 0.90531266, 0.3019608)
+
+[node name="EnemySpawner" type="Node3D" node_paths=PackedStringArray("_detection_area_3d")]
+script = ExtResource("1_nsgdp")
+_detection_radius_scale = 5.0
+_detection_area_3d = NodePath("DetectionArea3D")
+
+[node name="DetectionArea3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea3D"]
+shape = SubResource("SphereShape3D_nsgdp")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="DetectionArea3D"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_nsgdp")
+material = SubResource("StandardMaterial3D_nsgdp")

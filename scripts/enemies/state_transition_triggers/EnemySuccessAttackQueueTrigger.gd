@@ -1,0 +1,2 @@
+class_name EnemySuccessAttackQueueTrigger
+extends EnemyState.StateTransitionTrigger

@@ -74,24 +74,21 @@ func physics_process_as_state_machine(delta: float) -> void:
 	if _current_sub_state != null:
 		_current_sub_state.physics_process_as_state_machine(delta)
 
-## Pass down the trigger until it is consumed.
+## Pass up the trigger until it is consumed.
 ## Returns true if the trigger resulted in a state transition.
 func activate_trigger(trigger: StateTransitionTrigger) -> bool:
-	var root_state: EnemyState = self
-	var parent_state: EnemyState = internal_get_parent_state()
-	while parent_state != null:
-		root_state = parent_state
-		parent_state = root_state.internal_get_parent_state()
-
-	while root_state != null:
-		var target_state: EnemyState = root_state.internal_get_state_transition(trigger)
+	var current_state: EnemyState = self
+	while current_state != null:
+		var target_state: EnemyState = current_state.internal_get_state_transition(trigger)
 		if target_state == null:
-			root_state = root_state.internal_get_current_sub_state()
+			current_state = current_state.internal_get_parent_state()
 			continue
-		root_state.internal_get_parent_state().internal_change_sub_state(target_state)
+		current_state.internal_get_parent_state().internal_change_sub_state(target_state)
 		return true
-
 	return false
+
+func force_change_sub_state(new_state: EnemyState) -> void:
+	internal_change_sub_state(new_state)
 
 func internal_get_parent_state() -> EnemyState:
 	return _parent_state

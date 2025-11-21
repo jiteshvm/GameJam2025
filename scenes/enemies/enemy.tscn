@@ -1,7 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2v37l74cxd3g"]
+[gd_scene load_steps=10 format=3 uid="uid://b2v37l74cxd3g"]
 
 [ext_resource type="Script" uid="uid://db1irkkp603ud" path="res://scripts/enemies/Enemy.gd" id="1_8e3ao"]
 [ext_resource type="Texture2D" uid="uid://baqmokkcl8efx" path="res://assets/gauss/gauss_static.PNG" id="2_38ino"]
+
+[sub_resource type="Animation" id="Animation_lu5c6"]
+resource_name = "spawn"
+length = 0.5
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node3D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node3D:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
 
 [sub_resource type="Animation" id="Animation_8e3ao"]
 resource_name = "charge_attack"
@@ -152,7 +190,8 @@ tracks/5/keys = {
 _data = {
 &"RESET": SubResource("Animation_fcftc"),
 &"attacking": SubResource("Animation_38ino"),
-&"charge_attack": SubResource("Animation_8e3ao")
+&"charge_attack": SubResource("Animation_8e3ao"),
+&"spawn": SubResource("Animation_lu5c6")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q8u5g"]
@@ -164,6 +203,7 @@ radius = 1.0
 [node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("_animation_player", "_navigation_agent_3d", "_detection_range_shape_cast_3d", "_line_of_sight_ray_cast_3d", "_debug_label_3d")]
 script = ExtResource("1_8e3ao")
 _animation_player = NodePath("AnimationPlayer")
+_spawn_animation = SubResource("Animation_lu5c6")
 _charge_attack_animation = SubResource("Animation_8e3ao")
 _attacking_animation = SubResource("Animation_38ino")
 _navigation_agent_3d = NodePath("NavigationAgent3D")

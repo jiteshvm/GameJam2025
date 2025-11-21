@@ -1,0 +1,2 @@
+class_name MaxChaseDurationReachedTrigger
+extends EnemyState.StateTransitionTrigger

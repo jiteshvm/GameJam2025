@@ -11,8 +11,7 @@ func on_enter_state() -> void:
     var force_direction: Vector3 = blackboard.force_direction
     var force: Vector3 = force_direction * _intensity
 
-    var velocity: Vector3 = _enemy.get_velocity()
-    var new_velocity: Vector3 = velocity + force
+    var new_velocity: Vector3 = force
     _enemy.set_velocity(new_velocity)
 
     activate_trigger(StateCompleteTrigger.new())

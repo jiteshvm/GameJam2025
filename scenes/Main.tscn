@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cix450eg4kftb"]
+[gd_scene load_steps=19 format=3 uid="uid://cix450eg4kftb"]
 
 [ext_resource type="Script" uid="uid://6cclp23qyjmc" path="res://scripts/managers/CollisionLayersManager.gd" id="1_bjd11"]
 [ext_resource type="PackedScene" uid="uid://bc5bcxbqmbply" path="res://assets/First Level/Ceiling_Level_01_Low_01.glb" id="1_vcsgt"]
@@ -10,8 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://p1l3mqqgodlj" path="res://assets/First Level/Floor_Level_01_Low_01.glb" id="4_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://3a0bat1nprjt" path="res://assets/First Level/interior_Walls_Level_01_Low_01.glb" id="5_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://b2kd6oh6rdfto" path="res://assets/Props/Barrel_Low_01.glb" id="6_c01mt"]
+[ext_resource type="Script" uid="uid://ca5l6xgpvt3wm" path="res://scripts/managers/EnemyAttackTimingManager.gd" id="6_mwfav"]
 [ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/PlayerController3D.tscn" id="7_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bw62u0ucba2bg" path="res://features/diorama/CameraRig.tscn" id="8_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://b0vb7simuvgps" path="res://scenes/enemies/enemy_spawner.tscn" id="13_qmy6f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jlsqs"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -39,11 +41,16 @@ metadata/_custom_type_script = "uid://6cclp23qyjmc"
 
 [node name="EnemySpawnManager" type="Node" parent="." node_paths=PackedStringArray("_spawn_points", "_enemies_container", "_navigation_region_3d")]
 script = ExtResource("1_wp0k4")
+_enemy_spawner_packed_scene = ExtResource("13_qmy6f")
 _enemy_packed_scene = ExtResource("2_lhr70")
 _spawn_points = [NodePath("../EnemySpawnPoints/Marker3D"), NodePath("../EnemySpawnPoints/Marker3D2"), NodePath("../EnemySpawnPoints/Marker3D3")]
 _enemies_container = NodePath("../EnemiesContainer")
 _navigation_region_3d = NodePath("../NavigationRegion3D")
 metadata/_custom_type_script = "uid://c6b4jl8g15tlp"
+
+[node name="EnemyAttackTimingManager" type="Node" parent="."]
+script = ExtResource("6_mwfav")
+metadata/_custom_type_script = "uid://ca5l6xgpvt3wm"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_lhr70")

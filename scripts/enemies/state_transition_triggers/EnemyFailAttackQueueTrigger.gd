@@ -1,2 +1,2 @@
-class_name PlayerDisappearedTrigger
+class_name EnemyFailAttackQueueTrigger
 extends EnemyState.StateTransitionTrigger
