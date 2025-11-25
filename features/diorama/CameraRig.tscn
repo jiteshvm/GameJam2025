@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://05lx24nrvhqn" path="res://features/diorama/CameraController3D.gd" id="1_cam"]
 
-[node name="CameraRig" type="Node3D"]
+[node name="CameraRig" type="Node3D" node_paths=PackedStringArray("_camera_3d")]
 script = ExtResource("1_cam")
+_camera_3d = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.70710677, -0.4055798, 0.579228, 0, 0.81915206, 0.57357645, -0.70710677, -0.4055798, 0.579228, 6, 6, 6)

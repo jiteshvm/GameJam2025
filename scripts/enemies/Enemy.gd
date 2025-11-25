@@ -9,6 +9,7 @@ extends CharacterBody3D
 @export var _navigation_agent_3d: NavigationAgent3D
 @export var _detection_range_shape_cast_3d: ShapeCast3D
 @export var _line_of_sight_ray_cast_3d: RayCast3D
+@export var _sprite_3d: Sprite3D
 @export var _debug_label_3d: Label3D
 @export_group("Variables")
 @export var _line_of_sight_range_scale: float = 7.0
@@ -46,6 +47,7 @@ func init(navigation_region_3d: NavigationRegion3D) -> void:
 	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
 	general_enemy_state_blackboard.navigation_region_3d = navigation_region_3d
 	general_enemy_state_blackboard.player = get_tree().get_first_node_in_group("player")
+	general_enemy_state_blackboard.player_camera_controller_3d = get_tree().get_first_node_in_group("player_camera_controller_3d")
 
 	_detection_range_shape_cast_3d.set_scale(Vector3(_line_of_sight_range_scale, _line_of_sight_range_scale, _line_of_sight_range_scale))
 
@@ -105,12 +107,20 @@ func _setup_states() -> void:
 
 	hunting_state.setup_state_vars(chase_player_state)
 
+	var chase_face_player_state: FacePlayerEnemyState = FacePlayerEnemyState.new()
+	chase_face_player_state.setup_init("ChaseFacePlayer", self)
+	chase_player_state.setup_add_sub_state(chase_face_player_state)
+
 	var chase_break_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
 	chase_break_state.setup_init("ChaseBreak", self)
 	chase_break_state.setup_state_vars(_chase_break_duration_seconds)
 	hunting_state.setup_add_sub_state(chase_break_state)
 	hunting_state.setup_add_state_transition(chase_player_state, chase_break_state, MaxChaseDurationReachedTrigger.new())
 	hunting_state.setup_add_state_transition(chase_break_state, chase_player_state, StateCompleteTrigger.new())
+
+	var chase_break_face_player_state: FacePlayerEnemyState = FacePlayerEnemyState.new()
+	chase_break_face_player_state.setup_init("ChaseBreakFacePlayer", self)
+	chase_break_state.setup_add_sub_state(chase_break_face_player_state)
 
 	var wait_for_attack_queue_state: WaitForAttackQueueEnemyState = WaitForAttackQueueEnemyState.new()
 	wait_for_attack_queue_state.setup_init("WaitForAttackQueue", self)
@@ -135,6 +145,10 @@ func _setup_states() -> void:
 	set_force_direction_to_player_state.setup_state_vars(true)
 	hunting_state.setup_add_sub_state(set_force_direction_to_player_state)
 	hunting_state.setup_add_state_transition(wait_for_charge_attack_state, set_force_direction_to_player_state, StateCompleteTrigger.new())
+
+	var attack_face_player_state: FacePlayerEnemyState = FacePlayerEnemyState.new()
+	attack_face_player_state.setup_init("AttackFacePlayer", self)
+	set_force_direction_to_player_state.setup_add_sub_state(attack_face_player_state)
 
 	var attacking_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	attacking_state.setup_init("Attacking", self)
@@ -183,6 +197,9 @@ func get_blackboard() -> EnemyStateBlackboard:
 
 func get_navigation_agent_3d() -> NavigationAgent3D:
 	return _navigation_agent_3d
+
+func get_sprite_3d() -> Sprite3D:
+	return _sprite_3d
 
 func get_debug_label_3d() -> Label3D:
 	return _debug_label_3d

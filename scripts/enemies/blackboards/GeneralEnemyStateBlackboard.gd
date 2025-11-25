@@ -4,6 +4,7 @@ extends EnemyStateBlackboard
 # Nodes
 var navigation_region_3d: NavigationRegion3D = null
 var player: PlayerController3D = null
+var player_camera_controller_3d: CameraController3D = null
 # Line of Sight
 var player_in_line_of_sight: PlayerController3D = null
 # Path Calculation

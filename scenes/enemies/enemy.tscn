@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b2v37l74cxd3g"]
 
 [ext_resource type="Script" uid="uid://db1irkkp603ud" path="res://scripts/enemies/Enemy.gd" id="1_8e3ao"]
-[ext_resource type="Texture2D" uid="uid://baqmokkcl8efx" path="res://assets/gauss/gauss_static.PNG" id="2_38ino"]
+[ext_resource type="Texture2D" uid="uid://c6tf67hs62212" path="res://assets/enemy_aggressive/enemy_aggressive_idle.PNG" id="2_8e3ao"]
 
 [sub_resource type="Animation" id="Animation_lu5c6"]
 resource_name = "spawn"
@@ -10,7 +10,7 @@ step = 0.1
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:scale:x")
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -21,7 +21,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D:scale:y")
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -32,7 +32,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Node3D:scale:z")
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -48,7 +48,7 @@ step = 0.1
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:position:x")
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -59,7 +59,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D:position:y")
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -70,7 +70,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Node3D:position:z")
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:position:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -86,7 +86,7 @@ step = 0.1
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:scale:x")
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -97,7 +97,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D:scale:y")
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -108,7 +108,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Node3D:scale:z")
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -122,7 +122,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:scale:x")
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -133,7 +133,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D:scale:y")
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -144,7 +144,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Node3D:scale:z")
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -155,7 +155,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Node3D:position:x")
+tracks/3/path = NodePath("AnimPlayerPositionNode3D:position:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -166,7 +166,7 @@ tracks/3/keys = {
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Node3D:position:y")
+tracks/4/path = NodePath("AnimPlayerPositionNode3D:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -177,7 +177,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Node3D:position:z")
+tracks/5/path = NodePath("AnimPlayerPositionNode3D:position:z")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -200,7 +200,7 @@ height = 1.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_8e3ao"]
 radius = 1.0
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("_animation_player", "_navigation_agent_3d", "_detection_range_shape_cast_3d", "_line_of_sight_ray_cast_3d", "_debug_label_3d")]
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("_animation_player", "_navigation_agent_3d", "_detection_range_shape_cast_3d", "_line_of_sight_ray_cast_3d", "_sprite_3d", "_debug_label_3d")]
 script = ExtResource("1_8e3ao")
 _animation_player = NodePath("AnimationPlayer")
 _spawn_animation = SubResource("Animation_lu5c6")
@@ -209,6 +209,7 @@ _attacking_animation = SubResource("Animation_38ino")
 _navigation_agent_3d = NodePath("NavigationAgent3D")
 _detection_range_shape_cast_3d = NodePath("DetectionRangeShapeCast3D")
 _line_of_sight_ray_cast_3d = NodePath("LineOfSightRayCast3D")
+_sprite_3d = NodePath("AnimPlayerPositionNode3D/Sprite3D")
 _debug_label_3d = NodePath("DebugLabel3D")
 metadata/_custom_type_script = "uid://db1irkkp603ud"
 
@@ -224,15 +225,15 @@ shape = SubResource("CapsuleShape3D_q8u5g")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_height_offset = 0.25
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="AnimPlayerPositionNode3D" type="Node3D" parent="."]
 
-[node name="Sprite3D" type="Sprite3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48536968, 0)
+[node name="Sprite3D" type="Sprite3D" parent="AnimPlayerPositionNode3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5362848, 0)
 pixel_size = 0.001
 billboard = 1
 alpha_cut = 2
 texture_filter = 5
-texture = ExtResource("2_38ino")
+texture = ExtResource("2_8e3ao")
 
 [node name="LineOfSightRayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
