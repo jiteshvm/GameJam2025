@@ -21,29 +21,29 @@ offset_bottom = 40.0
 
 [node name="Start" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0
-offset_left = 200.0
+offset_left = 195.0
 offset_top = 245.0
-offset_right = 420.0
-offset_bottom = 332.0
+offset_right = 432.0
+offset_bottom = 355.0
 texture_normal = ExtResource("2_b0hv8")
 texture_hover = ExtResource("3_mbt8e")
 stretch_mode = 3
 
 [node name="Settings" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 380.0
-offset_right = 421.0
-offset_bottom = 468.0
+offset_left = 195.0
+offset_top = 385.0
+offset_right = 440.0
+offset_bottom = 483.0
 texture_normal = ExtResource("4_h7i8i")
 texture_hover = ExtResource("5_aagov")
 
 [node name="Credits" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0
-offset_left = 200.0
+offset_left = 195.0
 offset_top = 515.0
-offset_right = 421.0
-offset_bottom = 602.0
+offset_right = 428.0
+offset_bottom = 609.0
 texture_normal = ExtResource("6_vbwoa")
 texture_hover = ExtResource("7_paqc4")
 
