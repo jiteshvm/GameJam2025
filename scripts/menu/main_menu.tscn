@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://boqh54771726p"]
+[gd_scene load_steps=10 format=3 uid="uid://boqh54771726p"]
 
 [ext_resource type="Script" uid="uid://uig1givtx6nt" path="res://scripts/menu/main_menu.gd" id="1_rv6j7"]
 [ext_resource type="Texture2D" uid="uid://7ab0hfdb8gwt" path="res://assets/mainmenu/Start_btn.png" id="2_b0hv8"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bhaxtrgc0qvla" path="res://assets/mainmenu/Credits_btn.png" id="6_vbwoa"]
 [ext_resource type="Texture2D" uid="uid://chiyvkpo0m28f" path="res://assets/mainmenu/Credits_Hover_btn.png" id="7_paqc4"]
 [ext_resource type="Texture2D" uid="uid://buemuri0685n" path="res://assets/mainmenu/Menu_bg.png" id="8_mbt8e"]
+[ext_resource type="PackedScene" uid="uid://166uin1gbfth" path="res://scenes/fade_transition.tscn" id="9_h7i8i"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_rv6j7")
@@ -53,6 +54,12 @@ scale = Vector2(0.66655093, 0.6666667)
 texture = ExtResource("8_mbt8e")
 metadata/_edit_lock_ = true
 
+[node name="fade_transition" parent="." instance=ExtResource("9_h7i8i")]
+visible = false
+
+[node name="fade_timer" type="Timer" parent="fade_transition"]
+
 [connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonManager/Settings" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="ButtonManager/Credits" to="." method="_on_quit_pressed"]
+[connection signal="timeout" from="fade_transition/fade_timer" to="." method="_on_fade_timer_timeout"]
