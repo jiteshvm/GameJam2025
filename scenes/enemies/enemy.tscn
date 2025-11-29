@@ -201,6 +201,8 @@ height = 1.0
 radius = 1.0
 
 [node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("_animation_player", "_navigation_agent_3d", "_detection_range_shape_cast_3d", "_line_of_sight_ray_cast_3d", "_sprite_3d", "_debug_label_3d")]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_8e3ao")
 _animation_player = NodePath("AnimationPlayer")
 _spawn_animation = SubResource("Animation_lu5c6")

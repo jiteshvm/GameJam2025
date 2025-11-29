@@ -11,19 +11,54 @@ signal moved(new_global_position: Vector3)
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var idle_texture: Texture2D = preload("res://assets/gauss/gauss_idle.png")
 @export var movement_texture: Texture2D = preload("res://assets/gauss/gauss_movement.png")
+@export var attack_damage: int = 1
+@export var attack_knockback: float = 6.0
+@export var attack_cooldown_ms: int = 450
+@export var attack_active_ms: int = 180
+@export var attack_hitbox_offset: Vector3 = Vector3(0.8, 0.45, 0.0)
+@export var debug_attack_visualization: bool = true
+@export var debug_attack_logging: bool = true
+
+const ATTACK_DEBUG_COLOR_DEFAULT := Color(1, 0.188235, 0.188235, 0.631373)
+const ATTACK_DEBUG_COLOR_HIT := Color(0.16, 0.95, 0.16, 0.7)
 
 var _input_dir: Vector2 = Vector2.ZERO
 var _camera: Camera3D
 @onready var _sprite: Sprite3D = $Sprite3D
+@onready var _attack_hitbox: Area3D = $AttackHitbox
+@onready var _attack_hitbox_shape: CollisionShape3D = $"AttackHitbox/CollisionShape3D"
+@onready var _attack_debug_mesh: MeshInstance3D = $"AttackHitbox/DebugMesh"
+var _attack_debug_material: StandardMaterial3D
 var _active_sprite_texture: Texture2D = null
 var _facing_left: bool = false
+var _is_attack_active: bool = false
+var _attack_active_end_ms: int = 0
+var _attack_cooldown_end_ms: int = 0
+var _hit_enemies: Array[Enemy] = []
+var _attack_debug_hit_flash_end_ms: int = 0
 
 func _ready() -> void:
 	add_to_group("player")
 	_camera = get_viewport().get_camera_3d()
 	_update_sprite_texture(false)
+	_update_attack_hitbox_transform()
+	if _attack_debug_mesh:
+		if _attack_debug_mesh.material_override:
+			_attack_debug_material = _attack_debug_mesh.material_override.duplicate()
+		else:
+			_attack_debug_material = StandardMaterial3D.new()
+		_attack_debug_material.albedo_color = ATTACK_DEBUG_COLOR_DEFAULT
+		_attack_debug_mesh.material_override = _attack_debug_material
+	_update_attack_debug_visibility()
+	if _attack_hitbox:
+		_attack_hitbox.monitoring = false
+		_attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
+		if CollisionLayersManager.get_instance():
+			var enemy_layer: int = CollisionLayersManager.get_instance().get_collision_layers_definition().get_enemy_layer()
+			_attack_hitbox.collision_mask = enemy_layer
 
 func _physics_process(delta: float) -> void:
+	var now_ms: int = Time.get_ticks_msec()
 	if _camera == null:
 		_camera = get_viewport().get_camera_3d()
 
@@ -65,6 +100,9 @@ func _physics_process(delta: float) -> void:
 
 	_update_sprite_texture(wishdir != Vector3.ZERO)
 	_update_sprite_facing(_input_dir)
+	_update_attack_hitbox_transform()
+	_handle_attack_input(now_ms)
+	_update_attack_state(now_ms)
 
 	# Apply gravity when not grounded; clear residual when grounded.
 	if not is_on_floor():
@@ -89,6 +127,102 @@ func _update_sprite_texture(is_moving: bool) -> void:
 	_active_sprite_texture = desired
 	_sprite.texture = desired
 
+func _handle_attack_input(now_ms: int) -> void:
+	if Input.is_action_just_pressed("attack") and now_ms >= _attack_cooldown_end_ms and not _is_attack_active:
+		_start_attack(now_ms)
+
+func _start_attack(now_ms: int) -> void:
+	_is_attack_active = true
+	_attack_active_end_ms = now_ms + attack_active_ms
+	_attack_cooldown_end_ms = now_ms + attack_cooldown_ms
+	_hit_enemies.clear()
+	_set_attack_hitbox_enabled(true)
+	_update_attack_debug_visibility()
+	_set_attack_debug_color(ATTACK_DEBUG_COLOR_DEFAULT)
+	_attack_debug_hit_flash_end_ms = 0
+	_debug_log("Attack started at %s" % now_ms)
+	_process_attack_overlaps(now_ms)
+
+func _update_attack_state(now_ms: int) -> void:
+	if _is_attack_active and now_ms >= _attack_active_end_ms:
+		_is_attack_active = false
+		_set_attack_hitbox_enabled(false)
+		_update_attack_debug_visibility()
+		_debug_log("Attack ended at %s" % now_ms)
+	elif _is_attack_active:
+		_process_attack_overlaps(now_ms)
+	_update_attack_debug_color(now_ms)
+
+func _set_attack_hitbox_enabled(enabled: bool) -> void:
+	if _attack_hitbox == null or _attack_hitbox_shape == null:
+		return
+	_attack_hitbox.monitoring = enabled
+	_attack_hitbox.set_deferred("monitoring", enabled)
+	_attack_hitbox_shape.set_deferred("disabled", not enabled)
+
+func _update_attack_hitbox_transform() -> void:
+	if _attack_hitbox == null:
+		return
+	var offset: Vector3 = attack_hitbox_offset
+	var x_mag: float = abs(offset.x)
+	offset.x = -x_mag if _facing_left else x_mag
+	_attack_hitbox.position = offset
+
+func _on_attack_hitbox_body_entered(body: Node) -> void:
+	_handle_attack_hit_body(body, Time.get_ticks_msec())
+
+func _handle_attack_hit_body(body: Node, now_ms: int) -> void:
+	if not _is_attack_active:
+		return
+	if body == self:
+		return
+	if body is Enemy:
+		var enemy: Enemy = body as Enemy
+		if _hit_enemies.has(enemy):
+			return
+		_hit_enemies.append(enemy)
+		var push_vec: Vector3 = (enemy.global_position - global_position)
+		push_vec.y = 0.0
+		if push_vec.length() == 0.0:
+			push_vec = Vector3.LEFT if _facing_left else Vector3.RIGHT
+		push_vec = push_vec.normalized() * attack_knockback
+		enemy.apply_hit(attack_damage, push_vec)
+		_debug_log("Hit enemy %s" % enemy.get_instance_id())
+		_flash_attack_debug_hit(now_ms)
+
+func _process_attack_overlaps(now_ms: int) -> void:
+	if _attack_hitbox == null or not _attack_hitbox.monitoring:
+		return
+	var bodies := _attack_hitbox.get_overlapping_bodies()
+	for body in bodies:
+		_handle_attack_hit_body(body, now_ms)
+
+func _update_attack_debug_visibility() -> void:
+	if _attack_debug_mesh:
+		_attack_debug_mesh.visible = debug_attack_visualization and _is_attack_active
+
+func _set_attack_debug_color(color: Color) -> void:
+	if _attack_debug_material == null:
+		return
+	_attack_debug_material.albedo_color = color
+
+func _flash_attack_debug_hit(now_ms: int) -> void:
+	if not debug_attack_visualization:
+		return
+	_set_attack_debug_color(ATTACK_DEBUG_COLOR_HIT)
+	_attack_debug_hit_flash_end_ms = now_ms + 120
+
+func _update_attack_debug_color(now_ms: int) -> void:
+	if _attack_debug_hit_flash_end_ms == 0:
+		return
+	if now_ms >= _attack_debug_hit_flash_end_ms:
+		_attack_debug_hit_flash_end_ms = 0
+		_set_attack_debug_color(ATTACK_DEBUG_COLOR_DEFAULT)
+
+func _debug_log(message: String) -> void:
+	if debug_attack_logging:
+		print("[PlayerAttack] %s" % message)
+
 func _update_sprite_facing(movement: Vector2) -> void:
 	if _sprite == null:
 		return
@@ -99,3 +233,4 @@ func _update_sprite_facing(movement: Vector2) -> void:
 		return
 	_facing_left = should_face_left
 	_sprite.flip_h = _facing_left
+	_update_attack_hitbox_transform()

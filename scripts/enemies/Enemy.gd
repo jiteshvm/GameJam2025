@@ -29,11 +29,19 @@ extends CharacterBody3D
 @export_subgroup("Hitstunned")
 @export var _hitstunned_push_force_magnitude: float = 4.0
 @export var _hitstunned_duration_seconds: float = 0.5
+@export_subgroup("Feedback")
+@export var _hit_flash_duration_seconds: float = 0.15
+@export var _hit_flash_color: Color = Color(1, 0.4, 0.4, 1)
+@export_subgroup("Stats")
+@export var _max_health: int = 3
 
 # State Machine
 var _root_state: EnemyState = null
 var _blackboard: EnemyStateBlackboard = null
 var _friction: float = 0.0
+var _health: int = 0
+var _hit_flash_time_remaining: float = 0.0
+var _sprite_default_modulate: Color = Color(1, 1, 1, 1)
 
 func init(navigation_region_3d: NavigationRegion3D) -> void:
 	var player_layer: int = CollisionLayersManager.get_instance().get_collision_layers_definition().get_player_layer()
@@ -42,6 +50,9 @@ func init(navigation_region_3d: NavigationRegion3D) -> void:
 	_line_of_sight_ray_cast_3d.collision_mask = player_layer | walls_layer
 	
 	set_friction(_default_friction)
+	_health = _max_health
+	if _sprite_3d:
+		_sprite_default_modulate = _sprite_3d.modulate
 
 	_blackboard = GeneralEnemyStateBlackboard.new()
 	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
@@ -204,6 +215,21 @@ func get_sprite_3d() -> Sprite3D:
 func get_debug_label_3d() -> Label3D:
 	return _debug_label_3d
 
+func apply_hit(damage: int, knockback: Vector3) -> void:
+	if _health <= 0:
+		return
+	if damage > 0:
+		_health = max(0, _health - damage)
+	_start_hit_flash()
+	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+	if general_enemy_state_blackboard != null and knockback != Vector3.ZERO:
+		var dir: Vector3 = knockback.normalized()
+		general_enemy_state_blackboard.force_direction = dir
+	if _root_state != null:
+		_root_state.activate_trigger(HitstunnedTrigger.new())
+	if _health <= 0:
+		_die()
+
 func get_target_position_recalculation_interval_seconds() -> float:
 	return _target_position_recalculation_interval_seconds
 
@@ -229,6 +255,7 @@ func _process(delta: float) -> void:
 	_debug_label_3d.text = ""
 	if _root_state == null:
 		return
+	_update_hit_flash(delta)
 	_root_state.process_as_state_machine(delta)
 
 func _physics_process(delta: float) -> void:
@@ -242,6 +269,26 @@ func _physics_process(delta: float) -> void:
 	set_velocity(new_velocity)
 
 	move_and_slide()
+
+func _die() -> void:
+	var attack_manager := EnemyAttackTimingManager.get_instance()
+	if attack_manager != null:
+		attack_manager.consume_enemy_from_attack_queue(self)
+		attack_manager.remove_enemy(self)
+	queue_free()
+
+func _update_hit_flash(delta: float) -> void:
+	if _hit_flash_time_remaining <= 0.0:
+		return
+	_hit_flash_time_remaining = max(0.0, _hit_flash_time_remaining - delta)
+	if _hit_flash_time_remaining == 0.0 and _sprite_3d:
+		_sprite_3d.modulate = _sprite_default_modulate
+
+func _start_hit_flash() -> void:
+	if _sprite_3d == null:
+		return
+	_sprite_3d.modulate = _hit_flash_color
+	_hit_flash_time_remaining = _hit_flash_duration_seconds
 
 func get_player_in_line_of_sight() -> PlayerController3D:
 	_detection_range_shape_cast_3d.force_shapecast_update()
