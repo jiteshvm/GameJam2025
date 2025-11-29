@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ed74xy4xsu64"]
 
-[ext_resource type="Texture2D" uid="uid://baqmokkcl8efx" path="res://assets/gauss/gauss_static.PNG" id="2_n7ykp"]
+[ext_resource type="Texture2D" uid="uid://cu4xdlc5xgros" path="res://assets/gauss/gauss_idle.png" id="2_1550s"]
 [ext_resource type="Script" uid="uid://b4uxlw61xqowc" path="res://features/diorama/PlayerController3D.gd" id="2_pctrl"]
 
 [sub_resource type="CapsuleShape3D" id="2_xcap"]
@@ -19,7 +19,7 @@ pixel_size = 0.001
 billboard = 1
 alpha_cut = 2
 texture_filter = 0
-texture = ExtResource("2_n7ykp")
+texture = ExtResource("2_1550s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44261092, 0)

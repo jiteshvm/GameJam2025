@@ -9,13 +9,19 @@ signal moved(new_global_position: Vector3)
 @export var gamepad_deadzone: float = 0.18
 
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+@export var idle_texture: Texture2D = preload("res://assets/gauss/gauss_idle.png")
+@export var movement_texture: Texture2D = preload("res://assets/gauss/gauss_movement.png")
 
 var _input_dir: Vector2 = Vector2.ZERO
 var _camera: Camera3D
+@onready var _sprite: Sprite3D = $Sprite3D
+var _active_sprite_texture: Texture2D = null
+var _facing_left: bool = false
 
 func _ready() -> void:
 	add_to_group("player")
 	_camera = get_viewport().get_camera_3d()
+	_update_sprite_texture(false)
 
 func _physics_process(delta: float) -> void:
 	if _camera == null:
@@ -57,6 +63,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, drop)
 		velocity.z = move_toward(velocity.z, 0.0, drop)
 
+	_update_sprite_texture(wishdir != Vector3.ZERO)
+	_update_sprite_facing(_input_dir)
+
 	# Apply gravity when not grounded; clear residual when grounded.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -66,3 +75,27 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	moved.emit(global_position)
+
+func _update_sprite_texture(is_moving: bool) -> void:
+	if _sprite == null:
+		return
+	var desired: Texture2D = idle_texture
+	if is_moving and movement_texture != null:
+		desired = movement_texture
+	elif desired == null and movement_texture != null:
+		desired = movement_texture
+	if desired == null or desired == _active_sprite_texture:
+		return
+	_active_sprite_texture = desired
+	_sprite.texture = desired
+
+func _update_sprite_facing(movement: Vector2) -> void:
+	if _sprite == null:
+		return
+	if movement.x == 0.0:
+		return
+	var should_face_left: bool = movement.x < 0.0
+	if should_face_left == _facing_left:
+		return
+	_facing_left = should_face_left
+	_sprite.flip_h = _facing_left
