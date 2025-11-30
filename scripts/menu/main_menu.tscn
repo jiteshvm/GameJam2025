@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://buemuri0685n" path="res://assets/mainmenu/Menu_bg.png" id="8_mbt8e"]
 [ext_resource type="PackedScene" uid="uid://166uin1gbfth" path="res://scenes/fade_transition.tscn" id="9_h7i8i"]
 [ext_resource type="Texture2D" uid="uid://tdk685pjrd67" path="res://assets/mainmenu/Logo1.png" id="9_vbwoa"]
-[ext_resource type="FontFile" uid="uid://w3uy8d26iygx" path="res://assets/mainmenu/refinery-95-bold.ttf" id="10_aagov"]
+[ext_resource type="FontFile" uid="uid://blvj18iuhdur4" path="res://assets/mainmenu/ChakraPetch-Bold.ttf" id="10_aagov"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_rv6j7")

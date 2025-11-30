@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://w3uy8d26iygx"
-path="res://.godot/imported/refinery-95-bold.ttf-ca8cc901fcc30318882b03476e0a589a.fontdata"
+uid="uid://blvj18iuhdur4"
+path="res://.godot/imported/ChakraPetch-Bold.ttf-3f3555b7794ac882bd51a2296d4ee509.fontdata"
 
 [deps]
 
-source_file="res://assets/mainmenu/refinery-95-bold.ttf"
-dest_files=["res://.godot/imported/refinery-95-bold.ttf-ca8cc901fcc30318882b03476e0a589a.fontdata"]
+source_file="res://assets/mainmenu/ChakraPetch-Bold.ttf"
+dest_files=["res://.godot/imported/ChakraPetch-Bold.ttf-3f3555b7794ac882bd51a2296d4ee509.fontdata"]
 
 [params]
 
