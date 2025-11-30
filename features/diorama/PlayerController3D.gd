@@ -11,14 +11,20 @@ signal moved(new_global_position: Vector3)
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var idle_texture: Texture2D = preload("res://assets/gauss/gauss_idle.png")
 @export var movement_texture: Texture2D = preload("res://assets/gauss/gauss_movement.png")
+@export var attack_textures: Array[Texture2D] = [
+	preload("res://assets/gauss/gauss_attack1_1.png"),
+	preload("res://assets/gauss/gauss_attack1_2.png"),
+	preload("res://assets/gauss/gauss_attack1_3.png"),
+]
+@export var attack_animation_speed: float = 9.0
 @export var attack_damage: int = 1
 @export var attack_knockback: float = 6.0
-@export var attack_cooldown_ms: int = 450
+@export var attack_cooldown_ms: int = 50
 @export var attack_active_ms: int = 180
 @export var attack_hitbox_forward_distance: float = 0.5
 @export var attack_hitbox_vertical_offset: float = 0.45
 @export var attack_hitbox_size: Vector3 = Vector3(0.6, 0.85, 1.2)
-@export var debug_attack_visualization: bool = true
+@export var debug_attack_visualization: bool = false
 @export var debug_attack_logging: bool = true
 
 const ATTACK_DEBUG_COLOR_DEFAULT := Color(1, 0.188235, 0.188235, 0.631373)
@@ -26,12 +32,16 @@ const ATTACK_DEBUG_COLOR_HIT := Color(0.16, 0.95, 0.16, 0.7)
 
 var _input_dir: Vector2 = Vector2.ZERO
 var _camera: Camera3D
-@onready var _sprite: Sprite3D = $Sprite3D
+const ANIM_IDLE := &"idle"
+const ANIM_MOVE := &"move"
+const ANIM_ATTACK := &"attack1"
+
+@onready var _sprite: AnimatedSprite3D = $AnimatedSprite3D
 @onready var _attack_hitbox: Area3D = $AttackHitbox
 @onready var _attack_hitbox_shape: CollisionShape3D = $"AttackHitbox/CollisionShape3D"
 @onready var _attack_debug_mesh: MeshInstance3D = $"AttackHitbox/DebugMesh"
 var _attack_debug_material: StandardMaterial3D
-var _active_sprite_texture: Texture2D = null
+var _active_sprite_animation: StringName = StringName()
 var _facing_left: bool = false
 var _is_attack_active: bool = false
 var _attack_active_end_ms: int = 0
@@ -39,11 +49,14 @@ var _attack_cooldown_end_ms: int = 0
 var _hit_enemies: Array[Enemy] = []
 var _attack_forward_dir: Vector3 = Vector3(1, 0, 0)
 var _attack_debug_hit_flash_end_ms: int = 0
+var _attack_anim_in_progress: bool = false
+var _was_moving_last_frame: bool = false
 
 func _ready() -> void:
 	add_to_group("player")
 	_camera = get_viewport().get_camera_3d()
-	_update_sprite_texture(false)
+	_rebuild_sprite_frames()
+	_update_sprite_animation(false)
 	_update_attack_hitbox_transform()
 	_apply_attack_hitbox_size()
 	if _attack_debug_mesh:
@@ -103,7 +116,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, drop)
 		velocity.z = move_toward(velocity.z, 0.0, drop)
 
-	_update_sprite_texture(wishdir != Vector3.ZERO)
+	var is_moving: bool = wishdir != Vector3.ZERO
+	_was_moving_last_frame = is_moving
+	_update_sprite_animation(is_moving)
 	_update_sprite_facing(_input_dir)
 	_update_attack_forward_dir()
 	_update_attack_hitbox_transform()
@@ -120,18 +135,70 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	moved.emit(global_position)
 
-func _update_sprite_texture(is_moving: bool) -> void:
+func _update_sprite_animation(is_moving: bool) -> void:
 	if _sprite == null:
 		return
-	var desired: Texture2D = idle_texture
-	if is_moving and movement_texture != null:
-		desired = movement_texture
-	elif desired == null and movement_texture != null:
-		desired = movement_texture
-	if desired == null or desired == _active_sprite_texture:
+	if _attack_anim_in_progress:
 		return
-	_active_sprite_texture = desired
-	_sprite.texture = desired
+	var frames: SpriteFrames = _sprite.sprite_frames
+	if frames == null or frames.get_animation_names().is_empty():
+		return
+	var desired: StringName = _determine_desired_animation(is_moving, frames)
+	if desired == StringName() or desired == _active_sprite_animation:
+		return
+	if not frames.has_animation(desired):
+		return
+	_active_sprite_animation = desired
+	_sprite.play(desired)
+
+func _determine_desired_animation(is_moving: bool, frames: SpriteFrames) -> StringName:
+	if is_moving:
+		if frames.has_animation(ANIM_MOVE):
+			return ANIM_MOVE
+		if frames.has_animation(ANIM_IDLE):
+			return ANIM_IDLE
+	else:
+		if frames.has_animation(ANIM_IDLE):
+			return ANIM_IDLE
+		if frames.has_animation(ANIM_MOVE):
+			return ANIM_MOVE
+	var names := frames.get_animation_names()
+	if names.is_empty():
+		return StringName()
+	return StringName(names[0])
+
+func _rebuild_sprite_frames() -> void:
+	if _sprite == null:
+		return
+	var frames := SpriteFrames.new()
+	var added: bool = false
+	if idle_texture != null:
+		frames.add_animation(ANIM_IDLE)
+		frames.set_animation_loop(ANIM_IDLE, true)
+		frames.add_frame(ANIM_IDLE, idle_texture)
+		added = true
+	if movement_texture != null:
+		frames.add_animation(ANIM_MOVE)
+		frames.set_animation_loop(ANIM_MOVE, true)
+		frames.add_frame(ANIM_MOVE, movement_texture)
+		added = true
+	var attack_frame_added: bool = false
+	if attack_textures != null:
+		for tex in attack_textures:
+			if tex == null:
+				continue
+			if not frames.has_animation(ANIM_ATTACK):
+				frames.add_animation(ANIM_ATTACK)
+				frames.set_animation_loop(ANIM_ATTACK, false)
+			frames.add_frame(ANIM_ATTACK, tex)
+			attack_frame_added = true
+			added = true
+	if attack_frame_added:
+		frames.set_animation_speed(ANIM_ATTACK, attack_animation_speed)
+	if not added:
+		return
+	_sprite.sprite_frames = frames
+	_active_sprite_animation = StringName()
 
 func _handle_attack_input(now_ms: int) -> void:
 	if Input.is_action_just_pressed("attack") and now_ms >= _attack_cooldown_end_ms and not _is_attack_active:
@@ -147,6 +214,7 @@ func _start_attack(now_ms: int) -> void:
 	_set_attack_debug_color(ATTACK_DEBUG_COLOR_DEFAULT)
 	_attack_debug_hit_flash_end_ms = 0
 	_debug_log("Attack started at %s" % now_ms)
+	_play_attack_animation()
 	_process_attack_overlaps(now_ms)
 
 func _update_attack_state(now_ms: int) -> void:
@@ -155,6 +223,7 @@ func _update_attack_state(now_ms: int) -> void:
 		_set_attack_hitbox_enabled(false)
 		_update_attack_debug_visibility()
 		_debug_log("Attack ended at %s" % now_ms)
+		_stop_attack_animation()
 	elif _is_attack_active:
 		_process_attack_overlaps(now_ms)
 	_update_attack_debug_color(now_ms)
@@ -240,6 +309,24 @@ func _update_attack_debug_color(now_ms: int) -> void:
 	if now_ms >= _attack_debug_hit_flash_end_ms:
 		_attack_debug_hit_flash_end_ms = 0
 		_set_attack_debug_color(ATTACK_DEBUG_COLOR_DEFAULT)
+
+func _play_attack_animation() -> void:
+	if _sprite == null:
+		_attack_anim_in_progress = false
+		return
+	var frames: SpriteFrames = _sprite.sprite_frames
+	if frames == null or not frames.has_animation(ANIM_ATTACK):
+		_attack_anim_in_progress = false
+		return
+	_attack_anim_in_progress = true
+	_active_sprite_animation = ANIM_ATTACK
+	_sprite.play(ANIM_ATTACK)
+
+func _stop_attack_animation() -> void:
+	if not _attack_anim_in_progress:
+		return
+	_attack_anim_in_progress = false
+	_update_sprite_animation(_was_moving_last_frame)
 
 func _debug_log(message: String) -> void:
 	if debug_attack_logging:

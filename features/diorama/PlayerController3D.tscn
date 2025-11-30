@@ -1,11 +1,48 @@
-[gd_scene load_steps=11 format=3 uid="uid://ed74xy4xsu64"]
+[gd_scene load_steps=16 format=3 uid="uid://ed74xy4xsu64"]
 
 [ext_resource type="Texture2D" uid="uid://cu4xdlc5xgros" path="res://assets/gauss/gauss_idle.png" id="2_1550s"]
+[ext_resource type="Texture2D" uid="uid://1fsqcwoxmu47" path="res://assets/gauss/gauss_attack1_1.png" id="2_attack1_a"]
+[ext_resource type="Texture2D" uid="uid://bobd0uq7ksn0t" path="res://assets/gauss/gauss_attack1_2.png" id="2_attack1_b"]
+[ext_resource type="Texture2D" uid="uid://dwxncjibbqahm" path="res://assets/gauss/gauss_attack1_3.png" id="2_attack1_c"]
+[ext_resource type="Texture2D" uid="uid://bx10xy7icyd8p" path="res://assets/gauss/gauss_movement.png" id="2_move"]
 [ext_resource type="Script" uid="uid://b4uxlw61xqowc" path="res://features/diorama/PlayerController3D.gd" id="2_pctrl"]
-[ext_resource type="Script" path="res://features/combat/PlayerCombatController.gd" id="3_pcombat"]
-[ext_resource type="Resource" path="res://features/combat/data/combos.tres" id="4_combo"]
-[ext_resource type="Script" path="res://features/combat/InputBuffer.gd" id="5_input"]
-[ext_resource type="Script" path="res://features/combat/ComboRunner.gd" id="6_runner"]
+[ext_resource type="Script" uid="uid://dirhupj2q5a6e" path="res://features/combat/PlayerCombatController.gd" id="3_pcombat"]
+[ext_resource type="Resource" uid="uid://b2ocna6u7s118" path="res://features/combat/data/combos.tres" id="4_combo"]
+[ext_resource type="Script" uid="uid://bv1pvejphrit5" path="res://features/combat/InputBuffer.gd" id="5_input"]
+[ext_resource type="Script" uid="uid://buh33m3wyoirj" path="res://features/combat/ComboRunner.gd" id="6_runner"]
+
+[sub_resource type="SpriteFrames" id="PlayerSpriteFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_attack1_a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_attack1_b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_attack1_c")
+}],
+"loop": false,
+"name": &"attack1",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1550s")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_move")
+}],
+"loop": true,
+"name": &"move",
+"speed": 1.0
+}]
 
 [sub_resource type="CapsuleShape3D" id="2_xcap"]
 margin = 0.1
@@ -27,32 +64,31 @@ collision_layer = 2
 collision_mask = 33
 script = ExtResource("2_pctrl")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48547655, 0)
 pixel_size = 0.001
 billboard = 1
 alpha_cut = 2
 texture_filter = 0
-texture = ExtResource("2_1550s")
+sprite_frames = SubResource("PlayerSpriteFrames")
+animation = &"attack1"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44261092, 0)
 shape = SubResource("2_xcap")
 
 [node name="AttackHitbox" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-monitoring = false
-monitorable = true
 collision_layer = 0
 collision_mask = 4
+monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackHitbox"]
 shape = SubResource("AttackBoxShape")
 
 [node name="DebugMesh" type="MeshInstance3D" parent="AttackHitbox"]
 visible = false
-mesh = SubResource("AttackDebugMesh")
 material_override = SubResource("AttackDebugMaterial")
+mesh = SubResource("AttackDebugMesh")
 
 [node name="PlayerCombatController" type="Node" parent="."]
 script = ExtResource("3_pcombat")

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx10xy7icyd8p"
-path.s3tc="res://.godot/imported/gauss_movement.png-d474b45399f19e230c3c344baff51512.s3tc.ctex"
+uid="uid://bobd0uq7ksn0t"
+path.s3tc="res://.godot/imported/gauss_attack1_2.png-0f01cfd63acb35b8569cd663ab80d5e9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/gauss/gauss_movement.png"
-dest_files=["res://.godot/imported/gauss_movement.png-d474b45399f19e230c3c344baff51512.s3tc.ctex"]
+source_file="res://assets/gauss/gauss_attack1_2.png"
+dest_files=["res://.godot/imported/gauss_attack1_2.png-0f01cfd63acb35b8569cd663ab80d5e9.s3tc.ctex"]
 
 [params]
 
