@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1")
-tokens = [&"attack", &"push", &"pull", &"microwave"]
-combos = [[&"attack", &"attack"], [&"attack", &"attack", &"push"], [&"pull", &"attack", &"attack", &"push"], [&"microwave", &"pull", &"attack", &"attack", &"push"], [&"attack", &"microwave", &"attack", &"push", &"pull", &"push"]]
+tokens = [&"attack", &"push", &"pull"]
+combos = [[&"attack", &"attack"], [&"attack", &"attack", &"push"], [&"attack", &"attack", &"pull"], [&"push", &"pull", &"attack", &"attack"], [&"pull", &"attack", &"attack", &"push"]]

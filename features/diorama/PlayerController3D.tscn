@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ed74xy4xsu64"]
+[gd_scene load_steps=11 format=3 uid="uid://ed74xy4xsu64"]
 
 [ext_resource type="Texture2D" uid="uid://cu4xdlc5xgros" path="res://assets/gauss/gauss_idle.png" id="2_1550s"]
 [ext_resource type="Script" uid="uid://b4uxlw61xqowc" path="res://features/diorama/PlayerController3D.gd" id="2_pctrl"]
+[ext_resource type="Script" path="res://features/combat/PlayerCombatController.gd" id="3_pcombat"]
+[ext_resource type="Resource" path="res://features/combat/data/combos.tres" id="4_combo"]
+[ext_resource type="Script" path="res://features/combat/InputBuffer.gd" id="5_input"]
+[ext_resource type="Script" path="res://features/combat/ComboRunner.gd" id="6_runner"]
 
 [sub_resource type="CapsuleShape3D" id="2_xcap"]
 margin = 0.1
@@ -49,3 +53,13 @@ shape = SubResource("AttackBoxShape")
 visible = false
 mesh = SubResource("AttackDebugMesh")
 material_override = SubResource("AttackDebugMaterial")
+
+[node name="PlayerCombatController" type="Node" parent="."]
+script = ExtResource("3_pcombat")
+combo_db = ExtResource("4_combo")
+
+[node name="InputBuffer" type="Node" parent="PlayerCombatController"]
+script = ExtResource("5_input")
+
+[node name="ComboRunner" type="Node" parent="PlayerCombatController"]
+script = ExtResource("6_runner")

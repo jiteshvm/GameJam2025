@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cix450eg4kftb"]
+[gd_scene load_steps=21 format=3 uid="uid://cix450eg4kftb"]
 
 [ext_resource type="Script" uid="uid://6cclp23qyjmc" path="res://scripts/managers/CollisionLayersManager.gd" id="1_bjd11"]
 [ext_resource type="PackedScene" uid="uid://bc5bcxbqmbply" path="res://assets/First Level/Ceiling_Level_01_Low_01.glb" id="1_vcsgt"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://ed74xy4xsu64" path="res://features/diorama/PlayerController3D.tscn" id="7_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://bw62u0ucba2bg" path="res://features/diorama/CameraRig.tscn" id="8_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://b0vb7simuvgps" path="res://scenes/enemies/enemy_spawner.tscn" id="13_qmy6f"]
+[ext_resource type="Script" uid="uid://dkvwmha6rjafg" path="res://features/combat/ComboRunnerDebugHUD.gd" id="14_combohud"]
+[ext_resource type="Script" uid="uid://153vcemo4fwa" path="res://features/combat/ComboDesignerHUD.gd" id="15_combohud"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jlsqs"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -122,6 +124,83 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.192754, -9.536743e-07, -11.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.731179, -9.536743e-07, -10.595366)
 
 [node name="EnemiesContainer" type="Node3D" parent="."]
+
+[node name="ComboRunnerDebugHUD" type="CanvasLayer" parent="."]
+script = ExtResource("14_combohud")
+
+[node name="DebugPanel" type="Control" parent="ComboRunnerDebugHUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 240.0
+
+[node name="VBox" type="VBoxContainer" parent="ComboRunnerDebugHUD/DebugPanel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+scale = Vector2(2, 2)
+
+[node name="L_buffer" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "Buffer:"
+
+[node name="L_state" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "State:"
+
+[node name="L_combo" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "Combo:"
+
+[node name="L_step" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "Step:"
+
+[node name="L_window" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "Window:"
+
+[node name="L_time" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "t_left:"
+
+[node name="L_last" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
+layout_mode = 2
+text = "Last Combo: -"
+
+[node name="ComboDesignerHUD" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource("15_combohud")
+
+[node name="CombosPanel" type="Control" parent="ComboDesignerHUD"]
+layout_mode = 3
+anchor_left = 0.65
+anchor_top = 0.05
+anchor_right = 0.98
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 12.0
+scale = Vector2(2, 2)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ComboDesignerHUD/CombosPanel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+bbcode_enabled = true
+text = "[b]Available Combos[/b]"
+scroll_active = false
 
 [editable path="NavigationRegion3D/LevelGeometry/Ceiling_Level_01_Low_012"]
 [editable path="NavigationRegion3D/LevelGeometry/Exterior_Walls_Base_Level_01_Low_01"]
