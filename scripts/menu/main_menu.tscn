@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://boqh54771726p"]
+[gd_scene load_steps=12 format=3 uid="uid://boqh54771726p"]
 
 [ext_resource type="Script" uid="uid://uig1givtx6nt" path="res://scripts/menu/main_menu.gd" id="1_rv6j7"]
 [ext_resource type="Texture2D" uid="uid://7ab0hfdb8gwt" path="res://assets/mainmenu/Start_btn.png" id="2_b0hv8"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://chiyvkpo0m28f" path="res://assets/mainmenu/Credits_Hover_btn.png" id="7_paqc4"]
 [ext_resource type="Texture2D" uid="uid://buemuri0685n" path="res://assets/mainmenu/Menu_bg.png" id="8_mbt8e"]
 [ext_resource type="PackedScene" uid="uid://166uin1gbfth" path="res://scenes/fade_transition.tscn" id="9_h7i8i"]
+[ext_resource type="Texture2D" uid="uid://tdk685pjrd67" path="res://assets/mainmenu/Logo1.png" id="9_vbwoa"]
 [ext_resource type="FontFile" uid="uid://w3uy8d26iygx" path="res://assets/mainmenu/refinery-95-bold.ttf" id="10_aagov"]
 
 [node name="MainMenu" type="Node2D"]
@@ -23,44 +24,34 @@ offset_bottom = 40.0
 [node name="Start" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0
 offset_left = 319.0
-offset_top = 342.0
+offset_top = 400.0
 offset_right = 556.0
-offset_bottom = 452.0
+offset_bottom = 510.0
 texture_normal = ExtResource("2_b0hv8")
 texture_hover = ExtResource("3_mbt8e")
 stretch_mode = 3
 
 [node name="Settings" type="TextureButton" parent="ButtonManager"]
+visible = false
 layout_mode = 0
 offset_left = 317.0
-offset_top = 501.0
+offset_top = 733.0
 offset_right = 562.0
-offset_bottom = 599.0
+offset_bottom = 831.0
 texture_normal = ExtResource("4_h7i8i")
 texture_hover = ExtResource("5_aagov")
 
 [node name="Credits" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0
 offset_left = 319.0
-offset_top = 650.0
+offset_top = 572.0
 offset_right = 552.0
-offset_bottom = 744.0
+offset_bottom = 666.0
 texture_normal = ExtResource("6_vbwoa")
 texture_hover = ExtResource("7_paqc4")
 
-[node name="MenuBg" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(959.99994, 539.49994)
-scale = Vector2(0.9999999, 0.99907404)
-texture = ExtResource("8_mbt8e")
-metadata/_edit_lock_ = true
-
-[node name="fade_transition" parent="." instance=ExtResource("9_h7i8i")]
-visible = false
-
-[node name="fade_timer" type="Timer" parent="fade_transition"]
-
 [node name="CreditsText" type="Label" parent="."]
+visible = false
 offset_left = 979.0
 offset_top = 282.0
 offset_right = 1741.0
@@ -77,7 +68,24 @@ text = "CREDITS:
 ▪ Maryam - UI Design
 ▪ Sam - Game Design & Writing"
 
+[node name="Logo1" type="Sprite2D" parent="."]
+position = Vector2(1318, 477.99994)
+scale = Vector2(0.8975082, 0.89750826)
+texture = ExtResource("9_vbwoa")
+
+[node name="MenuBg" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(959.99994, 539.49994)
+scale = Vector2(0.9999999, 0.99907404)
+texture = ExtResource("8_mbt8e")
+metadata/_edit_lock_ = true
+
+[node name="fade_transition" parent="." instance=ExtResource("9_h7i8i")]
+visible = false
+
+[node name="fade_timer" type="Timer" parent="fade_transition"]
+
 [connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonManager/Settings" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="ButtonManager/Credits" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="ButtonManager/Credits" to="." method="_on_credits_pressed"]
 [connection signal="timeout" from="fade_transition/fade_timer" to="." method="_on_fade_timer_timeout"]

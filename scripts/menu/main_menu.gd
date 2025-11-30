@@ -12,14 +12,17 @@ func _process(delta: float) -> void:
 
 func _on_start_pressed() -> void:
 	button_type = "start"
+	$CreditsText.hide()
+	$Logo1.show()
 	$fade_transition.show()
 	$fade_transition/fade_timer.start()
 	$fade_transition/AnimationPlayer.play("fadeout")
 
-func _on_settings_pressed() -> void:
-	pass
-
 func _on_credits_pressed() -> void:
+	$Logo1.hide()
+	$CreditsText.show()
+
+func _on_settings_pressed() -> void:
 	pass
 
 func _on_fade_timer_timeout() -> void:
