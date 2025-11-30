@@ -144,7 +144,6 @@ offset_left = 4.0
 offset_top = 4.0
 offset_right = -4.0
 offset_bottom = -4.0
-scale = Vector2(2, 2)
 
 [node name="L_buffer" type="Label" parent="ComboRunnerDebugHUD/DebugPanel/VBox"]
 layout_mode = 2
@@ -188,7 +187,6 @@ offset_left = -12.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = 12.0
-scale = Vector2(2, 2)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ComboDesignerHUD/CombosPanel"]
 layout_mode = 0

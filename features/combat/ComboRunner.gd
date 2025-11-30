@@ -3,7 +3,7 @@ class_name ComboRunner
 
 enum State { IDLE, STEP_ACTIVE }
 
-@export var STEP_DUR_MS: int = 400
+@export var STEP_DUR_MS: int = 600
 @export var WINDOW_MS: int = 150
 @export var ALWAYS_OPEN: bool = true
 

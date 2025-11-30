@@ -16,11 +16,11 @@ signal moved(new_global_position: Vector3)
 	preload("res://assets/gauss/gauss_attack1_2.png"),
 	preload("res://assets/gauss/gauss_attack1_3.png"),
 ]
-@export var attack_animation_speed: float = 9.0
+@export var attack_animation_speed: float = 4.0
 @export var attack_damage: int = 1
 @export var attack_knockback: float = 6.0
-@export var attack_cooldown_ms: int = 50
-@export var attack_active_ms: int = 180
+@export var attack_cooldown_ms: int = 500
+@export var attack_active_ms: int = 400
 @export var attack_hitbox_forward_distance: float = 0.5
 @export var attack_hitbox_vertical_offset: float = 0.45
 @export var attack_hitbox_size: Vector3 = Vector3(0.6, 0.85, 1.2)
