@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8irggg20uw78"
 path.s3tc="res://.godot/imported/Ceiling_Level_01_Albedo_01.png-f3ebdbf7eaded33a4240c55f552bc347.s3tc.ctex"
+path.etc2="res://.godot/imported/Ceiling_Level_01_Albedo_01.png-f3ebdbf7eaded33a4240c55f552bc347.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Textures/Ceiling_Level_01_Albedo_01.png"
-dest_files=["res://.godot/imported/Ceiling_Level_01_Albedo_01.png-f3ebdbf7eaded33a4240c55f552bc347.s3tc.ctex"]
+dest_files=["res://.godot/imported/Ceiling_Level_01_Albedo_01.png-f3ebdbf7eaded33a4240c55f552bc347.s3tc.ctex", "res://.godot/imported/Ceiling_Level_01_Albedo_01.png-f3ebdbf7eaded33a4240c55f552bc347.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bhhwh1d64xi5a"
 path.s3tc="res://.godot/imported/interior_Walls_Level_01_Albedo_01.png-3b2335201112cad791bab9f671457076.s3tc.ctex"
+path.etc2="res://.godot/imported/interior_Walls_Level_01_Albedo_01.png-3b2335201112cad791bab9f671457076.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Textures/interior_Walls_Level_01_Albedo_01.png"
-dest_files=["res://.godot/imported/interior_Walls_Level_01_Albedo_01.png-3b2335201112cad791bab9f671457076.s3tc.ctex"]
+dest_files=["res://.godot/imported/interior_Walls_Level_01_Albedo_01.png-3b2335201112cad791bab9f671457076.s3tc.ctex", "res://.godot/imported/interior_Walls_Level_01_Albedo_01.png-3b2335201112cad791bab9f671457076.etc2.ctex"]
 
 [params]
 

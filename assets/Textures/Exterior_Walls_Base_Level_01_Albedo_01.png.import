@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dipr3120i5xyl"
 path.s3tc="res://.godot/imported/Exterior_Walls_Base_Level_01_Albedo_01.png-6462442e9cf99cc2839617f7709d533a.s3tc.ctex"
+path.etc2="res://.godot/imported/Exterior_Walls_Base_Level_01_Albedo_01.png-6462442e9cf99cc2839617f7709d533a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Textures/Exterior_Walls_Base_Level_01_Albedo_01.png"
-dest_files=["res://.godot/imported/Exterior_Walls_Base_Level_01_Albedo_01.png-6462442e9cf99cc2839617f7709d533a.s3tc.ctex"]
+dest_files=["res://.godot/imported/Exterior_Walls_Base_Level_01_Albedo_01.png-6462442e9cf99cc2839617f7709d533a.s3tc.ctex", "res://.godot/imported/Exterior_Walls_Base_Level_01_Albedo_01.png-6462442e9cf99cc2839617f7709d533a.etc2.ctex"]
 
 [params]
 
