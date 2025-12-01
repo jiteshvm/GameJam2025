@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b2kd6oh6rdfto"
-path="res://.godot/imported/Barrel_Low_01.glb-7fbb223da9d63c37b83923964ceb7088.scn"
+uid="uid://snwiwm4l33mq"
+path="res://.godot/imported/Complete_Scene_01.glb-efa9ce8ee165819370469761aab66211.scn"
 
 [deps]
 
-source_file="res://assets/Props/Barrel_Low_01.glb"
-dest_files=["res://.godot/imported/Barrel_Low_01.glb-7fbb223da9d63c37b83923964ceb7088.scn"]
+source_file="res://assets/Props/Complete_Scene_01.glb"
+dest_files=["res://.godot/imported/Complete_Scene_01.glb-efa9ce8ee165819370469761aab66211.scn"]
 
 [params]
 
@@ -37,14 +37,6 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"materials": {
-"Ok": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://resources/materials/barrel_low_material.tres",
-"use_external/path": "uid://d0qe8st8xul2o"
-}
-}
-}
+_subresources={}
 gltf/naming_version=2
 gltf/embedded_image_handling=1

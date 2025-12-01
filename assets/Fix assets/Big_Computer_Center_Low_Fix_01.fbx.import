@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b2kd6oh6rdfto"
-path="res://.godot/imported/Barrel_Low_01.glb-7fbb223da9d63c37b83923964ceb7088.scn"
+uid="uid://bhsno8fp835ad"
+path="res://.godot/imported/Big_Computer_Center_Low_Fix_01.fbx-af7aaea99af7703e90f5af80fa2d4843.scn"
 
 [deps]
 
-source_file="res://assets/Props/Barrel_Low_01.glb"
-dest_files=["res://.godot/imported/Barrel_Low_01.glb-7fbb223da9d63c37b83923964ceb7088.scn"]
+source_file="res://assets/Fix assets/Big_Computer_Center_Low_Fix_01.fbx"
+dest_files=["res://.godot/imported/Big_Computer_Center_Low_Fix_01.fbx-af7aaea99af7703e90f5af80fa2d4843.scn"]
 
 [params]
 
@@ -30,21 +30,15 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=false
+animation/trimming=true
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"materials": {
-"Ok": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://resources/materials/barrel_low_material.tres",
-"use_external/path": "uid://d0qe8st8xul2o"
-}
-}
-}
-gltf/naming_version=2
-gltf/embedded_image_handling=1
+_subresources={}
+fbx/importer=0
+fbx/allow_geometry_helper_nodes=false
+fbx/embedded_image_handling=1
+fbx/naming_version=2
