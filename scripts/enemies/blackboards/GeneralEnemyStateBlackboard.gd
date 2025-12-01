@@ -21,6 +21,7 @@ var max_chase_duration_seconds: float = 0.0
 var chase_break_duration_seconds: float = 0.0
 var attack_cooldown_seconds: float = 0.0
 var attack_apply_force_magnitude: float = 0.0
+var attack_friction: float = 0.0
 var hitstunned_push_force_magnitude: float = 0.0
 var hitstunned_duration_seconds: float = 0.0
 # Health

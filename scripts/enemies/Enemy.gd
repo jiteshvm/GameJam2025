@@ -47,7 +47,8 @@ extends CharacterBody3D
 @export var _weak_enemy_attack_apply_force_magnitude: float = 9.0
 @export var _aggressive_enemy_attack_cooldown_seconds: float = 0.5
 @export var _aggressive_enemy_attack_apply_force_magnitude: float = 12.0
-@export var _attack_friction: float = 10.0
+@export var _weak_enemy_attack_friction: float = 10.0
+@export var _aggressive_enemy_attack_friction: float = 15.0
 @export_subgroup("Hitstunned")
 @export var _weak_enemy_hitstunned_push_force_magnitude: float = 4.0
 @export var _weak_enemy_hitstunned_duration_seconds: float = 0.5
@@ -103,6 +104,7 @@ func init(enemy_type: EnemyType, navigation_region_3d: NavigationRegion3D) -> vo
 		general_enemy_state_blackboard.attack_apply_force_magnitude = _weak_enemy_attack_apply_force_magnitude
 		general_enemy_state_blackboard.hitstunned_push_force_magnitude = _weak_enemy_hitstunned_push_force_magnitude
 		general_enemy_state_blackboard.hitstunned_duration_seconds = _weak_enemy_hitstunned_duration_seconds
+		general_enemy_state_blackboard.attack_friction = _weak_enemy_attack_friction
 	else:
 		general_enemy_state_blackboard.max_health = _aggressive_enemy_max_health
 		general_enemy_state_blackboard.current_health = _aggressive_enemy_max_health
@@ -124,6 +126,7 @@ func init(enemy_type: EnemyType, navigation_region_3d: NavigationRegion3D) -> vo
 		general_enemy_state_blackboard.attack_apply_force_magnitude = _aggressive_enemy_attack_apply_force_magnitude
 		general_enemy_state_blackboard.hitstunned_push_force_magnitude = _aggressive_enemy_hitstunned_push_force_magnitude
 		general_enemy_state_blackboard.hitstunned_duration_seconds = _aggressive_enemy_hitstunned_duration_seconds
+		general_enemy_state_blackboard.attack_friction = _aggressive_enemy_attack_friction
 
 	general_enemy_state_blackboard.navigation_region_3d = navigation_region_3d
 	general_enemy_state_blackboard.player = get_tree().get_first_node_in_group("player")
@@ -278,7 +281,7 @@ func _setup_states() -> void:
 
 	var attack_set_friction_state: SetFrictionEnemyState = SetFrictionEnemyState.new()
 	attack_set_friction_state.setup_init("AttackSetFriction", self)
-	attack_set_friction_state.setup_state_vars(_attack_friction)
+	attack_set_friction_state.setup_state_vars(blackboard.attack_friction)
 	hunting_state.setup_add_sub_state(attack_set_friction_state)
 	hunting_state.setup_add_state_transition(attack_apply_force_state, attack_set_friction_state, StateCompleteTrigger.new())
 
