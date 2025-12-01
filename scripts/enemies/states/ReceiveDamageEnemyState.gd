@@ -6,7 +6,6 @@ func on_enter_state() -> void:
     var damage: int = general_enemy_state_blackboard.receiving_damage_amount
     if damage > 0:
         general_enemy_state_blackboard.current_health = max(0, general_enemy_state_blackboard.current_health - damage)
-        print("Enemy received damage: %s, current health: %s" % [damage, general_enemy_state_blackboard.current_health])
     activate_trigger(StateCompleteTrigger.new())
 
 func on_exit_state() -> void:

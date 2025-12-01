@@ -1,15 +1,20 @@
-[gd_scene load_steps=20 format=3 uid="uid://b2v37l74cxd3g"]
+[gd_scene load_steps=31 format=3 uid="uid://b2v37l74cxd3g"]
 
 [ext_resource type="Script" uid="uid://db1irkkp603ud" path="res://scripts/enemies/Enemy.gd" id="1_8e3ao"]
 [ext_resource type="Texture2D" uid="uid://c6tf67hs62212" path="res://assets/enemy_aggressive/enemy_aggressive_idle.PNG" id="2_8e3ao"]
 [ext_resource type="PackedScene" uid="uid://4nd0qe5o3q2r" path="res://scenes/enemies/enemy_death_particles.tscn" id="2_38ino"]
-[ext_resource type="Material" uid="uid://btu4tgthcrtma" path="res://resources/materials/enemy_hitflash_material.tres" id="3_fcftc"]
+[ext_resource type="Material" uid="uid://btu4tgthcrtma" path="res://resources/materials/enemy_weak_hitflash_material.tres" id="3_fcftc"]
 [ext_resource type="Texture2D" uid="uid://dfk201m7m1hig" path="res://assets/enemy_aggressive/enemy_aggressive_attack_1.PNG" id="3_lu5c6"]
 [ext_resource type="Texture2D" uid="uid://2fvpmpg77kt7" path="res://assets/enemy_aggressive/enemy_aggressive_attack_2.PNG" id="4_jt03m"]
+[ext_resource type="Texture2D" uid="uid://ddw55na1wk6nn" path="res://assets/enemy_weak/enemy_weak_attack_1.PNG" id="4_tihwb"]
 [ext_resource type="Texture2D" uid="uid://q0bpk7wcppet" path="res://assets/enemy_aggressive/enemy_aggressive_attack_3.PNG" id="5_n7575"]
+[ext_resource type="Texture2D" uid="uid://b66bw5h0s5va2" path="res://assets/enemy_weak/enemy_weak_attack_2.PNG" id="5_p7w77"]
+[ext_resource type="Texture2D" uid="uid://dpixembm02lkt" path="res://assets/enemy_weak/enemy_weak_attack_3.PNG" id="6_k4gvh"]
+[ext_resource type="Texture2D" uid="uid://r08fp6dklcul" path="res://assets/enemy_weak/enemy_weak_idle.PNG" id="7_n7575"]
+[ext_resource type="Material" uid="uid://d786t0mgnyv3" path="res://resources/materials/enemy_aggressive_hitflash_material.tres" id="12_p7w77"]
 
 [sub_resource type="Animation" id="Animation_lu5c6"]
-resource_name = "spawn"
+resource_name = "weak_enemy_spawn"
 length = 0.5
 step = 0.1
 tracks/0/type = "bezier"
@@ -45,9 +50,21 @@ tracks/2/keys = {
 "points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
 "times": PackedFloat32Array(0, 0.5)
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
 
-[sub_resource type="Animation" id="Animation_qch6t"]
-resource_name = "idle"
+[sub_resource type="Animation" id="Animation_sb86v"]
+resource_name = "weak_enemy_idle"
 length = 1.1
 loop_mode = 1
 step = 0.05
@@ -84,9 +101,21 @@ tracks/2/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.5)
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
 
 [sub_resource type="Animation" id="Animation_n7575"]
-resource_name = "walking"
+resource_name = "weak_enemy_walking"
 length = 0.35
 loop_mode = 1
 step = 0.05
@@ -123,9 +152,21 @@ tracks/2/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
 
 [sub_resource type="Animation" id="Animation_8e3ao"]
-resource_name = "charge_attack"
+resource_name = "weak_enemy_charge_attack"
 length = 0.5
 step = 0.1
 tracks/0/type = "bezier"
@@ -161,9 +202,21 @@ tracks/2/keys = {
 "points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 0, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0, 0, 0, 0, 0.03333333, 0, 0, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0),
 "times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3, 0.4, 0.5)
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
 
 [sub_resource type="Animation" id="Animation_38ino"]
-resource_name = "attacking"
+resource_name = "weak_enemy_attacking"
 length = 0.5
 step = 0.1
 tracks/0/type = "bezier"
@@ -209,11 +262,409 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("3_lu5c6"), ExtResource("4_jt03m"), ExtResource("5_n7575"), ExtResource("2_8e3ao")]
+"values": [ExtResource("4_tihwb"), ExtResource("5_p7w77"), ExtResource("6_k4gvh"), ExtResource("7_n7575")]
 }
 
 [sub_resource type="Animation" id="Animation_nb6gf"]
-resource_name = "hitstunned"
+resource_name = "weak_enemy_hitstunned"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(1, 0, 0, 0.022222225, 0, 0.8, -0.022222225, 0, 0.055555563, 0, 1, -0.055555563, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.06666667, 0.23333335)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(1, 0, 0, 0.022222225, 0, 0.8, -0.022222225, 0, 0.055555563, 0, 1, -0.055555563, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.06666667, 0.23333335)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(1, 0, 0, 0.022222225, 0, 0.8, -0.022222225, 0, 0.055555563, 0, 1, -0.055555563, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.06666667, 0.23333335)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.06666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:material_override")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_fcftc")]
+}
+
+[sub_resource type="Animation" id="Animation_jt03m"]
+resource_name = "weak_enemy_dying"
+length = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0),
+"points": PackedFloat32Array(1, 0, 0, 0.022222225, 0, 0.8, -0.022222225, 0, 0.055555563, 0, 1.2, -0.055555563, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.033333335, 0.1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0),
+"points": PackedFloat32Array(1, 0, 0, 0.022222225, 0, 0.8, -0.022222225, 0, 0.055555563, 0, 1.2, -0.055555563, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.033333335, 0.1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0),
+"points": PackedFloat32Array(1, 0, 0, 0.022222225, 0, 0.8, -0.022222225, 0, 0.055555563, 0, 1.2, -0.055555563, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.033333335, 0.1)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:texture")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_n7575")]
+}
+
+[sub_resource type="Animation" id="Animation_y5th1"]
+resource_name = "aggressive_enemy_spawn"
+length = 0.5
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_8e3ao")]
+}
+
+[sub_resource type="Animation" id="Animation_qch6t"]
+resource_name = "aggressive_enemy_idle"
+length = 1.1
+loop_mode = 1
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.083333336, 0, 0.1, -0.083333336, 0, 0, 0, 0.1, -0.083333336, 0, 0, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.083333336, 0, 0.05, -0.083333336, 0, 0.083333336, 0, 0, -0.083333336, 0, 0, 0, 0, 0, 0, 0.083333336, 0, 0.05, -0.083333336, 0, 0.083333336, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.5, 0.65, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_8e3ao")]
+}
+
+[sub_resource type="Animation" id="Animation_pe3k2"]
+resource_name = "aggressive_enemy_walking"
+length = 0.35
+loop_mode = 1
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.083333336, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.15)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.083333336, 0, 0.1, -0.083333336, 0, 0.083333336, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.15, 0.35)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_8e3ao")]
+}
+
+[sub_resource type="Animation" id="Animation_p7w77"]
+resource_name = "aggressive_enemy_charge_attack"
+length = 0.5
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 0, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0, 0, 0, 0, 0.03333333, 0, 0, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3, 0.4, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 0.05, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0, 0, 0, 0, 0.03333333, 0, 0.15, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3, 0.4, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.03333333, 0, 0, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0, 0, 0, 0, 0.03333333, 0, 0, -0.03333333, 0, 0.03333333, 0, 0, -0.03333333, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3, 0.4, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_8e3ao")]
+}
+
+[sub_resource type="Animation" id="Animation_tihwb"]
+resource_name = "aggressive_enemy_attacking"
+length = 0.4
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimPlayerPositionNode3D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(1, 0, 0, 0.03333333, 0, 1.3, -0.03333333, 0, 0.13333334, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.099999994, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimPlayerPositionNode3D:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(1, 0, 0, 0.03333333, 0, 1.3, -0.03333333, 0, 0.13333334, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.099999994, 0.4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimPlayerPositionNode3D:scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(1, 0, 0, 0.03333333, 0, 1.3, -0.03333333, 0, 0.13333334, 0, 1, -0.13333334, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.099999994, 0.4)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_lu5c6"), ExtResource("4_jt03m"), ExtResource("5_n7575"), ExtResource("2_8e3ao")]
+}
+
+[sub_resource type="Animation" id="Animation_twn6s"]
+resource_name = "aggressive_enemy_hitstunned"
 length = 0.3
 tracks/0/type = "bezier"
 tracks/0/imported = false
@@ -272,9 +723,21 @@ tracks/4/keys = {
 "update": 1,
 "values": [ExtResource("2_8e3ao")]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:material_override")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_p7w77")]
+}
 
-[sub_resource type="Animation" id="Animation_jt03m"]
-resource_name = "dying"
+[sub_resource type="Animation" id="Animation_k4gvh"]
+resource_name = "aggressive_enemy_dying"
 length = 0.1
 tracks/0/type = "bezier"
 tracks/0/imported = false
@@ -328,6 +791,18 @@ tracks/4/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_8e3ao")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:texture")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -402,102 +877,92 @@ tracks/5/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/6/type = "value"
+tracks/6/type = "bezier"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:texture")
+tracks/6/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:offset:x")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("2_8e3ao")]
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:offset:x")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:offset:y")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimPlayerPositionNode3D/Sprite3D:offset:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(450, -0.0005, 0, 0.0005, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:visible")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
 }
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:texture")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("2_8e3ao")]
-}
-tracks/11/type = "bezier"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:offset:x")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:offset:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/12/type = "bezier"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:offset:y")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:offset:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(450, -0.0005, 0, 0.0005, 0),
 "times": PackedFloat32Array(0)
 }
-
-[sub_resource type="Animation" id="Animation_y5th1"]
-resource_name = "empty"
-step = 0.05
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimPlayerPositionNode3D/HitFlashSprite3D:material_override")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_fcftc")]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fcftc"]
 _data = {
 &"RESET": SubResource("Animation_fcftc"),
-&"attacking": SubResource("Animation_38ino"),
-&"charge_attack": SubResource("Animation_8e3ao"),
-&"dying": SubResource("Animation_jt03m"),
-&"empty": SubResource("Animation_y5th1"),
-&"hitstunned": SubResource("Animation_nb6gf"),
-&"idle": SubResource("Animation_qch6t"),
-&"spawn": SubResource("Animation_lu5c6"),
-&"walking": SubResource("Animation_n7575")
+&"aggressive_enemy_attacking": SubResource("Animation_tihwb"),
+&"aggressive_enemy_charge_attack": SubResource("Animation_p7w77"),
+&"aggressive_enemy_dying": SubResource("Animation_k4gvh"),
+&"aggressive_enemy_hitstunned": SubResource("Animation_twn6s"),
+&"aggressive_enemy_idle": SubResource("Animation_qch6t"),
+&"aggressive_enemy_spawn": SubResource("Animation_y5th1"),
+&"aggressive_enemy_walking": SubResource("Animation_pe3k2"),
+&"weak_enemy_attacking": SubResource("Animation_38ino"),
+&"weak_enemy_charge_attack": SubResource("Animation_8e3ao"),
+&"weak_enemy_dying": SubResource("Animation_jt03m"),
+&"weak_enemy_hitstunned": SubResource("Animation_nb6gf"),
+&"weak_enemy_idle": SubResource("Animation_sb86v"),
+&"weak_enemy_spawn": SubResource("Animation_lu5c6"),
+&"weak_enemy_walking": SubResource("Animation_n7575")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q8u5g"]
@@ -511,13 +976,20 @@ collision_mask = 3
 script = ExtResource("1_8e3ao")
 _enemy_death_particles_packed_scene = ExtResource("2_38ino")
 _animation_player = NodePath("AnimationPlayer")
-_spawn_animation = SubResource("Animation_lu5c6")
-_idle_animation = SubResource("Animation_qch6t")
-_chase_animation = SubResource("Animation_n7575")
-_charge_attack_animation = SubResource("Animation_8e3ao")
-_attacking_animation = SubResource("Animation_38ino")
-_hitstunned_animation = SubResource("Animation_nb6gf")
-_death_animation = SubResource("Animation_jt03m")
+_weak_enemy_spawn_animation = SubResource("Animation_lu5c6")
+_weak_enemy_idle_animation = SubResource("Animation_sb86v")
+_weak_enemy_chase_animation = SubResource("Animation_n7575")
+_weak_enemy_charge_attack_animation = SubResource("Animation_8e3ao")
+_weak_enemy_attacking_animation = SubResource("Animation_38ino")
+_weak_enemy_hitstunned_animation = SubResource("Animation_nb6gf")
+_weak_enemy_death_animation = SubResource("Animation_jt03m")
+_aggressive_enemy_spawn_animation = SubResource("Animation_y5th1")
+_aggressive_enemy_idle_animation = SubResource("Animation_qch6t")
+_aggressive_enemy_chase_animation = SubResource("Animation_pe3k2")
+_aggressive_enemy_charge_attack_animation = SubResource("Animation_p7w77")
+_aggressive_enemy_attacking_animation = SubResource("Animation_tihwb")
+_aggressive_enemy_hitstunned_animation = SubResource("Animation_twn6s")
+_aggressive_enemy_death_animation = SubResource("Animation_k4gvh")
 _navigation_agent_3d = NodePath("NavigationAgent3D")
 _detection_range_shape_cast_3d = NodePath("DetectionRangeShapeCast3D")
 _line_of_sight_ray_cast_3d = NodePath("LineOfSightRayCast3D")

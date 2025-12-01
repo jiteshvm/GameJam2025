@@ -5,13 +5,20 @@ extends CharacterBody3D
 @export var _enemy_death_particles_packed_scene: PackedScene
 @export_group("Nodes")
 @export var _animation_player: AnimationPlayer
-@export var _spawn_animation: Animation
-@export var _idle_animation: Animation
-@export var _chase_animation: Animation
-@export var _charge_attack_animation: Animation
-@export var _attacking_animation: Animation
-@export var _hitstunned_animation: Animation
-@export var _death_animation: Animation
+@export var _weak_enemy_spawn_animation: Animation
+@export var _weak_enemy_idle_animation: Animation
+@export var _weak_enemy_chase_animation: Animation
+@export var _weak_enemy_charge_attack_animation: Animation
+@export var _weak_enemy_attacking_animation: Animation
+@export var _weak_enemy_hitstunned_animation: Animation
+@export var _weak_enemy_death_animation: Animation
+@export var _aggressive_enemy_spawn_animation: Animation
+@export var _aggressive_enemy_idle_animation: Animation
+@export var _aggressive_enemy_chase_animation: Animation
+@export var _aggressive_enemy_charge_attack_animation: Animation
+@export var _aggressive_enemy_attacking_animation: Animation
+@export var _aggressive_enemy_hitstunned_animation: Animation
+@export var _aggressive_enemy_death_animation: Animation
 @export var _navigation_agent_3d: NavigationAgent3D
 @export var _detection_range_shape_cast_3d: ShapeCast3D
 @export var _line_of_sight_ray_cast_3d: RayCast3D
@@ -23,31 +30,49 @@ extends CharacterBody3D
 @export var _line_of_sight_range_scale: float = 7.0
 @export var _target_position_recalculation_interval_seconds: float = 0.2
 @export_subgroup("Movement")
-@export var _base_move_acceleration: float = 100.0
-@export var _base_desired_move_speed: float = 2.5
+@export var _weak_enemy_base_move_acceleration: float = 100.0
+@export var _weak_enemy_base_desired_move_speed: float = 2.0
+@export var _aggressive_enemy_base_move_acceleration: float = 150.0
+@export var _aggressive_enemy_base_desired_move_speed: float = 3.5
 @export var _default_friction: float = 10.0
 @export_subgroup("Chasing Player")
-@export var _chase_player_desired_distance: float = 3.0
-@export var _max_chase_duration_seconds: float = 5.0
-@export var _chase_break_duration_seconds: float = 2.0
+@export var _weak_enemy_chase_player_desired_distance: float = 2.5
+@export var _weak_enemy_max_chase_duration_seconds: float = 3.0
+@export var _weak_enemy_chase_break_duration_seconds: float = 2.0
+@export var _aggressive_enemy_chase_player_desired_distance: float = 3.0
+@export var _aggressive_enemy_max_chase_duration_seconds: float = 2.0
+@export var _aggressive_enemy_chase_break_duration_seconds: float = 0.75
 @export_subgroup("Attacking Player")
-@export var _attack_cooldown_seconds: float = 1.0
-@export var _attack_apply_force_magnitude: float = 9.0
+@export var _weak_enemy_attack_cooldown_seconds: float = 1.0
+@export var _weak_enemy_attack_apply_force_magnitude: float = 9.0
+@export var _aggressive_enemy_attack_cooldown_seconds: float = 0.5
+@export var _aggressive_enemy_attack_apply_force_magnitude: float = 12.0
 @export var _attack_friction: float = 10.0
 @export_subgroup("Hitstunned")
-@export var _hitstunned_push_force_magnitude: float = 4.0
-@export var _hitstunned_duration_seconds: float = 0.5
+@export var _weak_enemy_hitstunned_push_force_magnitude: float = 4.0
+@export var _weak_enemy_hitstunned_duration_seconds: float = 0.5
+@export var _aggressive_enemy_hitstunned_push_force_magnitude: float = 6.0
+@export var _aggressive_enemy_hitstunned_duration_seconds: float = 0.25
 @export_subgroup("Stats")
-@export var _max_health: int = 3
+@export var _weak_enemy_max_health: int = 4
+@export var _aggressive_enemy_max_health: int = 10
 
 signal enemy_died(enemy: Enemy)
 
 # State Machine
 var _root_state: EnemyState = null
 var _blackboard: EnemyStateBlackboard = null
+var _enemy_type: EnemyType
 var _friction: float = 0.0
 
-func init(navigation_region_3d: NavigationRegion3D) -> void:
+enum EnemyType {
+	WEAK,
+	AGGRESSIVE,
+}
+
+func init(enemy_type: EnemyType, navigation_region_3d: NavigationRegion3D) -> void:
+	_enemy_type = enemy_type
+
 	var player_layer: int = CollisionLayersManager.get_instance().get_collision_layers_definition().get_player_layer()
 	var walls_layer: int = CollisionLayersManager.get_instance().get_collision_layers_definition().get_walls_layer()
 	_detection_range_shape_cast_3d.collision_mask = player_layer
@@ -57,8 +82,49 @@ func init(navigation_region_3d: NavigationRegion3D) -> void:
 
 	_blackboard = GeneralEnemyStateBlackboard.new()
 	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
-	general_enemy_state_blackboard.max_health = _max_health
-	general_enemy_state_blackboard.current_health = _max_health
+	if _enemy_type == EnemyType.WEAK:
+		general_enemy_state_blackboard.max_health = _weak_enemy_max_health
+		general_enemy_state_blackboard.current_health = _weak_enemy_max_health
+
+		general_enemy_state_blackboard.spawn_animation = _weak_enemy_spawn_animation
+		general_enemy_state_blackboard.idle_animation = _weak_enemy_idle_animation
+		general_enemy_state_blackboard.chase_animation = _weak_enemy_chase_animation
+		general_enemy_state_blackboard.charge_attack_animation = _weak_enemy_charge_attack_animation
+		general_enemy_state_blackboard.attacking_animation = _weak_enemy_attacking_animation
+		general_enemy_state_blackboard.hitstunned_animation = _weak_enemy_hitstunned_animation
+		general_enemy_state_blackboard.death_animation = _weak_enemy_death_animation
+
+		general_enemy_state_blackboard.base_move_acceleration = _weak_enemy_base_move_acceleration
+		general_enemy_state_blackboard.base_desired_move_speed = _weak_enemy_base_desired_move_speed
+		general_enemy_state_blackboard.chase_player_desired_distance = _weak_enemy_chase_player_desired_distance
+		general_enemy_state_blackboard.max_chase_duration_seconds = _weak_enemy_max_chase_duration_seconds
+		general_enemy_state_blackboard.chase_break_duration_seconds = _weak_enemy_chase_break_duration_seconds
+		general_enemy_state_blackboard.attack_cooldown_seconds = _weak_enemy_attack_cooldown_seconds
+		general_enemy_state_blackboard.attack_apply_force_magnitude = _weak_enemy_attack_apply_force_magnitude
+		general_enemy_state_blackboard.hitstunned_push_force_magnitude = _weak_enemy_hitstunned_push_force_magnitude
+		general_enemy_state_blackboard.hitstunned_duration_seconds = _weak_enemy_hitstunned_duration_seconds
+	else:
+		general_enemy_state_blackboard.max_health = _aggressive_enemy_max_health
+		general_enemy_state_blackboard.current_health = _aggressive_enemy_max_health
+
+		general_enemy_state_blackboard.spawn_animation = _aggressive_enemy_spawn_animation
+		general_enemy_state_blackboard.idle_animation = _aggressive_enemy_idle_animation
+		general_enemy_state_blackboard.chase_animation = _aggressive_enemy_chase_animation
+		general_enemy_state_blackboard.charge_attack_animation = _aggressive_enemy_charge_attack_animation
+		general_enemy_state_blackboard.attacking_animation = _aggressive_enemy_attacking_animation
+		general_enemy_state_blackboard.hitstunned_animation = _aggressive_enemy_hitstunned_animation
+		general_enemy_state_blackboard.death_animation = _aggressive_enemy_death_animation
+
+		general_enemy_state_blackboard.base_move_acceleration = _aggressive_enemy_base_move_acceleration
+		general_enemy_state_blackboard.base_desired_move_speed = _aggressive_enemy_base_desired_move_speed
+		general_enemy_state_blackboard.chase_player_desired_distance = _aggressive_enemy_chase_player_desired_distance
+		general_enemy_state_blackboard.max_chase_duration_seconds = _aggressive_enemy_max_chase_duration_seconds
+		general_enemy_state_blackboard.chase_break_duration_seconds = _aggressive_enemy_chase_break_duration_seconds
+		general_enemy_state_blackboard.attack_cooldown_seconds = _aggressive_enemy_attack_cooldown_seconds
+		general_enemy_state_blackboard.attack_apply_force_magnitude = _aggressive_enemy_attack_apply_force_magnitude
+		general_enemy_state_blackboard.hitstunned_push_force_magnitude = _aggressive_enemy_hitstunned_push_force_magnitude
+		general_enemy_state_blackboard.hitstunned_duration_seconds = _aggressive_enemy_hitstunned_duration_seconds
+
 	general_enemy_state_blackboard.navigation_region_3d = navigation_region_3d
 	general_enemy_state_blackboard.player = get_tree().get_first_node_in_group("player")
 	general_enemy_state_blackboard.player_camera_controller_3d = get_tree().get_first_node_in_group("player_camera_controller_3d")
@@ -69,18 +135,20 @@ func init(navigation_region_3d: NavigationRegion3D) -> void:
 	_root_state.enter_as_state_machine()
 
 func _setup_states() -> void:
+	var blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+
 	var root_state: EnemyState = EmptyEnemyState.new()
 	root_state.setup_init("Root", self)
 	_root_state = root_state
 
 	var play_spawn_animation_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	play_spawn_animation_state.setup_init("PlaySpawnAnimation", self)
-	play_spawn_animation_state.setup_state_vars(_animation_player, _spawn_animation)
+	play_spawn_animation_state.setup_state_vars(_animation_player, blackboard.spawn_animation)
 	root_state.setup_add_sub_state(play_spawn_animation_state)
 
 	var wait_for_spawn_animation_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
 	wait_for_spawn_animation_state.setup_init("WaitForSpawnAnimation", self)
-	wait_for_spawn_animation_state.setup_state_vars(_animation_player, _spawn_animation)
+	wait_for_spawn_animation_state.setup_state_vars(_animation_player, blackboard.spawn_animation)
 	root_state.setup_add_sub_state(wait_for_spawn_animation_state)
 	root_state.setup_add_state_transition(play_spawn_animation_state, wait_for_spawn_animation_state, StateCompleteTrigger.new())
 
@@ -103,7 +171,7 @@ func _setup_states() -> void:
 
 	var hitstunned_push_state: ApplyForceEnemyState = ApplyForceEnemyState.new()
 	hitstunned_push_state.setup_init("HitstunnedPush", self)
-	hitstunned_push_state.setup_state_vars(_hitstunned_push_force_magnitude)
+	hitstunned_push_state.setup_state_vars(blackboard.hitstunned_push_force_magnitude)
 	hitstunned_state.setup_add_sub_state(hitstunned_push_state)
 	hitstunned_state.setup_add_state_transition(hitstunned_set_force_direction_to_player_state, hitstunned_push_state, StateCompleteTrigger.new())
 
@@ -114,13 +182,13 @@ func _setup_states() -> void:
 
 	var hitstunned_play_hitstunned_animation_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	hitstunned_play_hitstunned_animation_state.setup_init("HitstunnedPlayHitstunnedAnimation", self)
-	hitstunned_play_hitstunned_animation_state.setup_state_vars(_animation_player, _hitstunned_animation)
+	hitstunned_play_hitstunned_animation_state.setup_state_vars(_animation_player, blackboard.hitstunned_animation)
 	hitstunned_state.setup_add_sub_state(hitstunned_play_hitstunned_animation_state)
 	hitstunned_state.setup_add_state_transition(hitstunned_check_alive_state, hitstunned_play_hitstunned_animation_state, StateCompleteTrigger.new())
 
 	var hitstunned_waiting_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
 	hitstunned_waiting_state.setup_init("HitstunnedWaiting", self)
-	hitstunned_waiting_state.setup_state_vars(_hitstunned_duration_seconds)
+	hitstunned_waiting_state.setup_state_vars(blackboard.hitstunned_duration_seconds)
 	hitstunned_state.setup_add_sub_state(hitstunned_waiting_state)
 	hitstunned_state.setup_add_state_transition(hitstunned_play_hitstunned_animation_state, hitstunned_waiting_state, StateCompleteTrigger.new())
 
@@ -133,7 +201,7 @@ func _setup_states() -> void:
 
 	var hunting_play_chase_animation_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	hunting_play_chase_animation_state.setup_init("HuntingPlayChaseAnimation", self)
-	hunting_play_chase_animation_state.setup_state_vars(_animation_player, _chase_animation)
+	hunting_play_chase_animation_state.setup_state_vars(_animation_player, blackboard.chase_animation)
 	hunting_state.setup_add_sub_state(hunting_play_chase_animation_state)
 
 	hunting_state.setup_set_forced_reentry_sub_state(hunting_play_chase_animation_state)
@@ -151,14 +219,14 @@ func _setup_states() -> void:
 
 	var hunting_break_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
 	hunting_break_state.setup_init("HuntingBreak", self)
-	hunting_break_state.setup_state_vars(_chase_break_duration_seconds)
+	hunting_break_state.setup_state_vars(blackboard.chase_break_duration_seconds)
 	root_state.setup_add_sub_state(hunting_break_state)
 	root_state.setup_add_state_transition(hunting_state, hunting_break_state, MaxChaseDurationReachedTrigger.new())
 	root_state.setup_add_state_transition(hunting_break_state, hunting_state, StateCompleteTrigger.new())
 
 	var hunting_chase_break_play_idle_animation_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	hunting_chase_break_play_idle_animation_state.setup_init("ChaseBreakPlayIdleAnimation", self)
-	hunting_chase_break_play_idle_animation_state.setup_state_vars(_animation_player, _idle_animation)
+	hunting_chase_break_play_idle_animation_state.setup_state_vars(_animation_player, blackboard.idle_animation)
 	hunting_break_state.setup_add_sub_state(hunting_chase_break_play_idle_animation_state)
 
 	hunting_break_state.setup_set_forced_reentry_sub_state(hunting_chase_break_play_idle_animation_state)
@@ -176,13 +244,13 @@ func _setup_states() -> void:
 
 	var charge_attack_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	charge_attack_state.setup_init("ChargeAttack", self)
-	charge_attack_state.setup_state_vars(_animation_player, _charge_attack_animation)
+	charge_attack_state.setup_state_vars(_animation_player, blackboard.charge_attack_animation)
 	hunting_state.setup_add_sub_state(charge_attack_state)
 	hunting_state.setup_add_state_transition(wait_for_attack_queue_state, charge_attack_state, EnemySuccessAttackQueueTrigger.new())
 
 	var wait_for_charge_attack_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
 	wait_for_charge_attack_state.setup_init("WaitForChargeAttack", self)
-	wait_for_charge_attack_state.setup_state_vars(_animation_player, _charge_attack_animation)
+	wait_for_charge_attack_state.setup_state_vars(_animation_player, blackboard.charge_attack_animation)
 	hunting_state.setup_add_sub_state(wait_for_charge_attack_state)
 	hunting_state.setup_add_state_transition(charge_attack_state, wait_for_charge_attack_state, StateCompleteTrigger.new())
 
@@ -198,13 +266,13 @@ func _setup_states() -> void:
 
 	var attacking_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	attacking_state.setup_init("Attacking", self)
-	attacking_state.setup_state_vars(_animation_player, _attacking_animation)
+	attacking_state.setup_state_vars(_animation_player, blackboard.attacking_animation)
 	hunting_state.setup_add_sub_state(attacking_state)
 	hunting_state.setup_add_state_transition(set_force_direction_to_player_state, attacking_state, StateCompleteTrigger.new())
 
 	var attack_apply_force_state: ApplyForceEnemyState = ApplyForceEnemyState.new()
 	attack_apply_force_state.setup_init("AttackApplyForce", self)
-	attack_apply_force_state.setup_state_vars(_attack_apply_force_magnitude)
+	attack_apply_force_state.setup_state_vars(blackboard.attack_apply_force_magnitude)
 	hunting_state.setup_add_sub_state(attack_apply_force_state)
 	hunting_state.setup_add_state_transition(attacking_state, attack_apply_force_state, StateCompleteTrigger.new())
 
@@ -221,7 +289,7 @@ func _setup_states() -> void:
 
 	var wait_for_attacking_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
 	wait_for_attacking_state.setup_init("WaitForAttacking", self)
-	wait_for_attacking_state.setup_state_vars(_animation_player, _attacking_animation)
+	wait_for_attacking_state.setup_state_vars(_animation_player, blackboard.attacking_animation)
 	hunting_state.setup_add_sub_state(wait_for_attacking_state)
 	hunting_state.setup_add_state_transition(consume_attack_queue_state, wait_for_attacking_state, StateCompleteTrigger.new())
 
@@ -233,7 +301,7 @@ func _setup_states() -> void:
 
 	var attack_cooldown_state: WaitForDurationEnemyState = WaitForDurationEnemyState.new()
 	attack_cooldown_state.setup_init("AttackCooldown", self)
-	attack_cooldown_state.setup_state_vars(_attack_cooldown_seconds)
+	attack_cooldown_state.setup_state_vars(blackboard.attack_cooldown_seconds)
 	hunting_state.setup_add_sub_state(attack_cooldown_state)
 	hunting_state.setup_add_state_transition(attack_restore_friction_state, attack_cooldown_state, StateCompleteTrigger.new())
 	hunting_state.setup_add_state_transition(attack_cooldown_state, hunting_play_chase_animation_state, StateCompleteTrigger.new())
@@ -245,12 +313,12 @@ func _setup_states() -> void:
 
 	var dying_play_death_animation_state: PlayAnimationEnemyState = PlayAnimationEnemyState.new()
 	dying_play_death_animation_state.setup_init("DyingPlayDeathAnimation", self)
-	dying_play_death_animation_state.setup_state_vars(_animation_player, _death_animation)
+	dying_play_death_animation_state.setup_state_vars(_animation_player, blackboard.death_animation)
 	dying_state.setup_add_sub_state(dying_play_death_animation_state)
 
 	var dying_wait_for_death_animation_state: WaitForAnimationEnemyState = WaitForAnimationEnemyState.new()
 	dying_wait_for_death_animation_state.setup_init("DyingWaitForDeathAnimation", self)
-	dying_wait_for_death_animation_state.setup_state_vars(_animation_player, _death_animation)
+	dying_wait_for_death_animation_state.setup_state_vars(_animation_player, blackboard.death_animation)
 	dying_state.setup_add_sub_state(dying_wait_for_death_animation_state)
 	dying_state.setup_add_state_transition(dying_play_death_animation_state, dying_wait_for_death_animation_state, StateCompleteTrigger.new())
 
@@ -297,19 +365,24 @@ func get_target_position_recalculation_interval_seconds() -> float:
 	return _target_position_recalculation_interval_seconds
 
 func get_base_move_acceleration() -> float:
-	return _base_move_acceleration
+	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+	return general_enemy_state_blackboard.base_move_acceleration
 
 func get_base_desired_move_speed() -> float:
-	return _base_desired_move_speed
+	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+	return general_enemy_state_blackboard.base_desired_move_speed
 
 func get_chase_player_desired_distance() -> float:
-	return _chase_player_desired_distance
+	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+	return general_enemy_state_blackboard.chase_player_desired_distance
 
 func get_max_chase_duration_seconds() -> float:
-	return _max_chase_duration_seconds
+	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+	return general_enemy_state_blackboard.max_chase_duration_seconds
 
 func get_chase_break_duration_seconds() -> float:
-	return _chase_break_duration_seconds
+	var general_enemy_state_blackboard: GeneralEnemyStateBlackboard = _blackboard as GeneralEnemyStateBlackboard
+	return general_enemy_state_blackboard.chase_break_duration_seconds
 
 func set_friction(friction: float) -> void:
 	_friction = friction

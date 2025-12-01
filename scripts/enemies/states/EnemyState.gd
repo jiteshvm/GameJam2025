@@ -60,7 +60,6 @@ func enter_as_state_machine() -> void:
 
 	if _forced_reentry_sub_state != null:
 		_current_sub_state = _forced_reentry_sub_state
-		print("Forced reentry sub state: %s" % _forced_reentry_sub_state.get_state_name())
 
 	if _current_sub_state == null and _default_sub_state != null:
 		_current_sub_state = _default_sub_state
