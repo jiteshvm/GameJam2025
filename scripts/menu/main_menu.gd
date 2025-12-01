@@ -23,9 +23,6 @@ func _on_credits_pressed() -> void:
 	$Logo1.hide()
 	$ControlsText.hide()
 	$CreditsText.show()
-	
-func _on_quit_pressed() -> void:
-	get_tree().quit()
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start" :
