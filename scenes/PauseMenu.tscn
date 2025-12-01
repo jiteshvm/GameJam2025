@@ -1,0 +1,185 @@
+[gd_scene load_steps=12 format=3 uid="uid://bhxnqlywhnl8b"]
+
+[ext_resource type="Script" uid="uid://bmckdjchnypbq" path="res://scenes/pause_menu.gd" id="1_g4jo0"]
+[ext_resource type="Shader" uid="uid://d0odx70lrsyt3" path="res://scenes/PauseMenu.gdshader" id="1_jvnd5"]
+[ext_resource type="Texture2D" uid="uid://bbv7p3j7tqunw" path="res://assets/pausemenu/PauseMenuCanvas.png" id="3_yx35g"]
+[ext_resource type="Texture2D" uid="uid://cs6t740kkiu40" path="res://assets/pausemenu/resume.png" id="4_vd2mf"]
+[ext_resource type="Texture2D" uid="uid://u1qmyoghcn4l" path="res://assets/pausemenu/resumehover.png" id="5_abn1t"]
+[ext_resource type="Texture2D" uid="uid://l282cl3sefg7" path="res://assets/pausemenu/quit.png" id="6_8ti4s"]
+[ext_resource type="Texture2D" uid="uid://ba1rn16hkfdkv" path="res://assets/pausemenu/quithover.png" id="7_shaba"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4jo0"]
+shader = ExtResource("1_jvnd5")
+shader_parameter/lod = 0.0
+
+[sub_resource type="Animation" id="Animation_komsw"]
+resource_name = "pauseblur"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.810000038475]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PauseMenuCanvas:modulate:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PauseMenuCanvas:modulate:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PauseMenuCanvas:modulate:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PauseMenuCanvas:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 1, -0.050000004, -0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_5w6ei"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PauseMenuCanvas:modulate:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PauseMenuCanvas:modulate:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PauseMenuCanvas:modulate:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PauseMenuCanvas:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jiu6o"]
+_data = {
+&"RESET": SubResource("Animation_5w6ei"),
+&"pauseblur": SubResource("Animation_komsw")
+}
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g4jo0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_g4jo0")
+layout_mode = 0
+offset_left = 31.0
+offset_top = 75.0
+offset_right = 1951.0
+offset_bottom = 1155.0
+
+[node name="PauseMenuCanvas" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(960, 541)
+texture = ExtResource("3_yx35g")
+
+[node name="Resume" type="TextureButton" parent="PauseMenuCanvas"]
+offset_left = -145.0
+offset_top = -165.0
+offset_right = 133.0
+offset_bottom = -36.0
+texture_normal = ExtResource("4_vd2mf")
+texture_hover = ExtResource("5_abn1t")
+
+[node name="Quit" type="TextureButton" parent="PauseMenuCanvas"]
+offset_left = -145.0
+offset_top = 11.0
+offset_right = 133.0
+offset_bottom = 140.0
+texture_normal = ExtResource("6_8ti4s")
+texture_hover = ExtResource("7_shaba")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jiu6o")
+}
+
+[connection signal="pressed" from="PauseMenuCanvas/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseMenuCanvas/Quit" to="." method="_on_quit_pressed"]

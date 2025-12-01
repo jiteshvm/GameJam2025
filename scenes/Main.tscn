@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cix450eg4kftb"]
+[gd_scene load_steps=22 format=3 uid="uid://cix450eg4kftb"]
 
 [ext_resource type="Script" uid="uid://6cclp23qyjmc" path="res://scripts/managers/CollisionLayersManager.gd" id="1_bjd11"]
 [ext_resource type="PackedScene" uid="uid://bc5bcxbqmbply" path="res://assets/First Level/Ceiling_Level_01_Low_01.glb" id="1_vcsgt"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://b0vb7simuvgps" path="res://scenes/enemies/enemy_spawner.tscn" id="13_qmy6f"]
 [ext_resource type="Script" uid="uid://dkvwmha6rjafg" path="res://features/combat/ComboRunnerDebugHUD.gd" id="14_combohud"]
 [ext_resource type="Script" uid="uid://153vcemo4fwa" path="res://features/combat/ComboDesignerHUD.gd" id="15_combohud"]
+[ext_resource type="PackedScene" uid="uid://bhxnqlywhnl8b" path="res://scenes/PauseMenu.tscn" id="17_ft6cd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jlsqs"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -199,6 +200,10 @@ offset_bottom = -4.0
 bbcode_enabled = true
 text = "[b]Available Combos[/b]"
 scroll_active = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("17_ft6cd")]
 
 [editable path="NavigationRegion3D/LevelGeometry/Ceiling_Level_01_Low_012"]
 [editable path="NavigationRegion3D/LevelGeometry/Exterior_Walls_Base_Level_01_Low_01"]
