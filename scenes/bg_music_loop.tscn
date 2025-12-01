@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cg83kr6rkf53u"]
+
+[ext_resource type="AudioStream" uid="uid://b4lxf8ndiopem" path="res://assets/sound/MUSIC/Itch Loop_60s_1201.wav" id="1_2u0eg"]
+
+[node name="BG Music Loop" type="AudioStreamPlayer"]
+stream = ExtResource("1_2u0eg")
+autoplay = true

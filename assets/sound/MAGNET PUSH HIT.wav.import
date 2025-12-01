@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bi5mpvlcjmtid"
+path="res://.godot/imported/MAGNET PUSH HIT.wav-d4b2a4fdeb2f45f6310f39031f1e75da.sample"
+
+[deps]
+
+source_file="res://assets/sound/MAGNET PUSH HIT.wav"
+dest_files=["res://.godot/imported/MAGNET PUSH HIT.wav-d4b2a4fdeb2f45f6310f39031f1e75da.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

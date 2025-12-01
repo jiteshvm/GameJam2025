@@ -11,6 +11,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_start_pressed() -> void:
+	$ButtonManager/Start/AudioStreamPlayer.play()
 	button_type = "start"
 	$CreditsText.hide()
 	$ControlsText.hide()

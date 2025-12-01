@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b4lxf8ndiopem"
+path="res://.godot/imported/Itch Loop_60s_1201.wav-eb1cfdb43abc4b661f09fcfa674d6187.sample"
+
+[deps]
+
+source_file="res://assets/sound/MUSIC/Itch Loop_60s_1201.wav"
+dest_files=["res://.godot/imported/Itch Loop_60s_1201.wav-eb1cfdb43abc4b661f09fcfa674d6187.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=true
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=44100
+edit/loop_end=-1
+compress/mode=0

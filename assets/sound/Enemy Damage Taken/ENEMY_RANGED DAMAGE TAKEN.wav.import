@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ddckbn3h5dui3"
+path="res://.godot/imported/ENEMY_RANGED DAMAGE TAKEN.wav-3cad3fc7615258f1a97a39c81d719f95.sample"
+
+[deps]
+
+source_file="res://assets/sound/Enemy Damage Taken/ENEMY_RANGED DAMAGE TAKEN.wav"
+dest_files=["res://.godot/imported/ENEMY_RANGED DAMAGE TAKEN.wav-3cad3fc7615258f1a97a39c81d719f95.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

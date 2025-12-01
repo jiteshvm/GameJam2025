@@ -1,14 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqgm1b3jt434x"]
+[gd_scene load_steps=14 format=3 uid="uid://bqgm1b3jt434x"]
 
 [ext_resource type="Script" uid="uid://uig1givtx6nt" path="res://scripts/menu/main_menu.gd" id="1_rv6j7"]
 [ext_resource type="Texture2D" uid="uid://7ab0hfdb8gwt" path="res://assets/UI/mainmenu/Start_btn.png" id="2_b0hv8"]
+[ext_resource type="Script" uid="uid://t7jgfm4hnxm6" path="res://scenes/button_manager.gd" id="2_rcqid"]
 [ext_resource type="Texture2D" uid="uid://b7s3gy3ctbs2k" path="res://assets/UI/mainmenu/Start_Hover_btn.png" id="3_mbt8e"]
 [ext_resource type="Texture2D" uid="uid://c6nmweu0skivm" path="res://assets/UI/mainmenu/Controls_btn.png" id="4_vbwoa"]
+[ext_resource type="AudioStream" uid="uid://djl2abl1oj0o2" path="res://assets/sound/START BUTTON.mp3" id="5_1ajci"]
 [ext_resource type="Texture2D" uid="uid://dgc51btydctol" path="res://assets/UI/mainmenu/Controls_Hover_btn.png" id="5_paqc4"]
 [ext_resource type="Texture2D" uid="uid://bhaxtrgc0qvla" path="res://assets/UI/mainmenu/Credits_btn.png" id="6_vbwoa"]
 [ext_resource type="Texture2D" uid="uid://chiyvkpo0m28f" path="res://assets/UI/mainmenu/Credits_Hover_btn.png" id="7_paqc4"]
 [ext_resource type="Texture2D" uid="uid://buemuri0685n" path="res://assets/UI/mainmenu/Menu_bg.png" id="8_mbt8e"]
-[ext_resource type="PackedScene" path="res://scenes/fade_transition.tscn" id="9_h7i8i"]
+[ext_resource type="PackedScene" uid="uid://166uin1gbfth" path="res://scenes/fade_transition.tscn" id="9_h7i8i"]
 [ext_resource type="Texture2D" uid="uid://tdk685pjrd67" path="res://assets/UI/mainmenu/Logo1.png" id="9_vbwoa"]
 [ext_resource type="FontFile" uid="uid://blvj18iuhdur4" path="res://assets/UI/mainmenu/ChakraPetch-Bold.ttf" id="10_aagov"]
 
@@ -20,6 +22,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("2_rcqid")
 
 [node name="Start" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0
@@ -30,6 +33,10 @@ offset_bottom = 446.0
 texture_normal = ExtResource("2_b0hv8")
 texture_hover = ExtResource("3_mbt8e")
 stretch_mode = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ButtonManager/Start"]
+stream = ExtResource("5_1ajci")
+volume_db = -4.0
 
 [node name="Controls" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0

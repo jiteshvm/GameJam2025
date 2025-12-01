@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d25yukosgbt4y"
+path="res://.godot/imported/FOOTSTEP METAL SOFT 3.wav-a97b20656609729d3dff3d30ebd7e849.sample"
+
+[deps]
+
+source_file="res://assets/sound/MC Footsteps/FOOTSTEP METAL SOFT 3.wav"
+dest_files=["res://.godot/imported/FOOTSTEP METAL SOFT 3.wav-a97b20656609729d3dff3d30ebd7e849.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
