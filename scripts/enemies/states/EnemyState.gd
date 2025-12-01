@@ -6,6 +6,7 @@ var _enemy: Enemy = null
 var _blackboard: EnemyStateBlackboard = null
 var _current_sub_state: EnemyState = null
 var _default_sub_state: EnemyState = null
+var _forced_reentry_sub_state: EnemyState = null
 var _parent_state: EnemyState = null
 
 var _sub_states: Array[EnemyState] = []
@@ -28,6 +29,9 @@ func setup_add_sub_state(sub_state: EnemyState) -> void:
 			push_error("Sub state %s already exists" % sub_state)
 			return
 	_sub_states.append(sub_state)
+
+func setup_set_forced_reentry_sub_state(forced_reentry_sub_state: EnemyState) -> void:
+	_forced_reentry_sub_state = forced_reentry_sub_state
 
 func internal_setup_set_parent_state(parent_state: EnemyState) -> void:
 	_parent_state = parent_state
@@ -53,6 +57,11 @@ func internal_setup_add_state_transition(target_state: EnemyState, trigger: Stat
 
 func enter_as_state_machine() -> void:
 	on_enter_state()
+
+	if _forced_reentry_sub_state != null:
+		_current_sub_state = _forced_reentry_sub_state
+		print("Forced reentry sub state: %s" % _forced_reentry_sub_state.get_state_name())
+
 	if _current_sub_state == null and _default_sub_state != null:
 		_current_sub_state = _default_sub_state
 	
@@ -74,9 +83,20 @@ func physics_process_as_state_machine(delta: float) -> void:
 	if _current_sub_state != null:
 		_current_sub_state.physics_process_as_state_machine(delta)
 
+## Find deepest state and push up the trigger from it.
+func activate_trigger(trigger: StateTransitionTrigger) -> bool:
+	var deepest_state: EnemyState = self
+	var current_sub_state: EnemyState = _current_sub_state
+	while current_sub_state != null:
+		deepest_state = current_sub_state
+		current_sub_state = current_sub_state.internal_get_current_sub_state()
+	if deepest_state == null:
+		return false
+	return deepest_state.internal_push_up_trigger(trigger)
+
 ## Pass up the trigger until it is consumed.
 ## Returns true if the trigger resulted in a state transition.
-func activate_trigger(trigger: StateTransitionTrigger) -> bool:
+func internal_push_up_trigger(trigger: StateTransitionTrigger) -> bool:
 	var current_state: EnemyState = self
 	while current_state != null:
 		var target_state: EnemyState = current_state.internal_get_state_transition(trigger)

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwxncjibbqahm"
 path.s3tc="res://.godot/imported/gauss_attack1_3.png-5d339c05f8ad3e414a4cc483d62e0d1c.s3tc.ctex"
+path.etc2="res://.godot/imported/gauss_attack1_3.png-5d339c05f8ad3e414a4cc483d62e0d1c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/gauss/gauss_attack1_3.png"
-dest_files=["res://.godot/imported/gauss_attack1_3.png-5d339c05f8ad3e414a4cc483d62e0d1c.s3tc.ctex"]
+dest_files=["res://.godot/imported/gauss_attack1_3.png-5d339c05f8ad3e414a4cc483d62e0d1c.s3tc.ctex", "res://.godot/imported/gauss_attack1_3.png-5d339c05f8ad3e414a4cc483d62e0d1c.etc2.ctex"]
 
 [params]
 

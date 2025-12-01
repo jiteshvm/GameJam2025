@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://4nd0qe5o3q2r"]
+
+[ext_resource type="Script" uid="uid://e0iip2ncq6cv" path="res://scripts/enemies/EnemyDeathParticles.gd" id="1_wiand"]
+[ext_resource type="Texture2D" uid="uid://x45ve77jf8ly" path="res://assets/effects/white_rect.png" id="2_wiand"]
+
+[sub_resource type="Curve" id="Curve_wiand"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3657718, 0.9687183), 0.0, 0.0, 0, 0, Vector2(0.58389264, 0.29738826), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_qqveh"]
+curve = SubResource("Curve_wiand")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_03jye"]
+angle_min = -179.99998
+angle_max = 180.00002
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_qqveh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vva2x"]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = ExtResource("2_wiand")
+
+[sub_resource type="QuadMesh" id="QuadMesh_5sv0f"]
+material = SubResource("StandardMaterial3D_vva2x")
+
+[node name="EnemyDeathParticles" type="Node3D" node_paths=PackedStringArray("_gpu_particles_3d")]
+script = ExtResource("1_wiand")
+_gpu_particles_3d = NodePath("GPUParticles3D")
+metadata/_custom_type_script = "uid://e0iip2ncq6cv"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+emitting = false
+amount = 12
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.75
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_03jye")
+draw_pass_1 = SubResource("QuadMesh_5sv0f")

@@ -5,6 +5,11 @@ extends EnemyStateBlackboard
 var navigation_region_3d: NavigationRegion3D = null
 var player: PlayerController3D = null
 var player_camera_controller_3d: CameraController3D = null
+# Health
+var max_health: int = 0
+var current_health: int = 0
+# Receiving damage
+var receiving_damage_amount: int = 0
 # Line of Sight
 var player_in_line_of_sight: PlayerController3D = null
 # Path Calculation

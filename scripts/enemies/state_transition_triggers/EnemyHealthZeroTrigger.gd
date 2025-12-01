@@ -1,0 +1,2 @@
+class_name EnemyHealthZeroTrigger
+extends EnemyState.StateTransitionTrigger

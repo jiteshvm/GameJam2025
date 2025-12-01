@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6tf67hs62212"
 path.s3tc="res://.godot/imported/enemy_aggressive_idle.PNG-febf324863a7299954b15129840d071c.s3tc.ctex"
+path.etc2="res://.godot/imported/enemy_aggressive_idle.PNG-febf324863a7299954b15129840d071c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/enemy_aggressive/enemy_aggressive_idle.PNG"
-dest_files=["res://.godot/imported/enemy_aggressive_idle.PNG-febf324863a7299954b15129840d071c.s3tc.ctex"]
+dest_files=["res://.godot/imported/enemy_aggressive_idle.PNG-febf324863a7299954b15129840d071c.s3tc.ctex", "res://.godot/imported/enemy_aggressive_idle.PNG-febf324863a7299954b15129840d071c.etc2.ctex"]
 
 [params]
 

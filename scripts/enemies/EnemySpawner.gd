@@ -4,6 +4,8 @@ extends Node3D
 @export var _detection_radius_scale: float = 3.0
 @export var _detection_area_3d: Area3D
 
+signal enemy_spawned(enemy_spawner: EnemySpawner, enemy: Enemy)
+
 var _enemy_packed_scene: PackedScene = null
 var _enemies_container: Node3D = null
 var _navigation_region_3d: NavigationRegion3D = null
@@ -25,6 +27,7 @@ func _on_body_entered(body: Node3D) -> void:
 		_enemies_container.add_child(enemy)
 		enemy.init(_navigation_region_3d)
 		enemy.global_position = global_position
+		enemy_spawned.emit(self, enemy)
 		_destroy_spawner()
 
 func _destroy_spawner() -> void:
