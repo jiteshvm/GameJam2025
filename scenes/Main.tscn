@@ -20,7 +20,7 @@
 [ext_resource type="Material" uid="uid://b65obvm3uel3h" path="res://assets/materials/exterior_walls_level_material_3d.tres" id="14_ebg2g"]
 [ext_resource type="Material" uid="uid://clcacdwrbocll" path="res://assets/materials/floor_level_01_material_3d.tres" id="14_nfivy"]
 [ext_resource type="Script" uid="uid://153vcemo4fwa" path="res://features/combat/ComboDesignerHUD.gd" id="15_combohud"]
-[ext_resource type="PackedScene" uid="uid://bhxnqlywhnl8b" path="res://scenes/PauseMenu.tscn" id="17_ft6cd"]
+[ext_resource type="PackedScene" path="res://scenes/PauseMenu.tscn" id="17_ft6cd"]
 [ext_resource type="Material" uid="uid://b40cba0rub88l" path="res://assets/materials/interior_walls_level_material_3d.tres" id="18_2ofn6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jlsqs"]
