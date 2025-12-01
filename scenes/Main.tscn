@@ -128,22 +128,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.547009, 0.39723206, -3.9063
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7463107, -9.536743e-07, -2.618988)
 
 [node name="Marker3D2" type="Marker3D" parent="WeakEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8641167, -9.536743e-07, -9.654112)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8641167, -9.536743e-07, -10.411505)
 
 [node name="Marker3D3" type="Marker3D" parent="WeakEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0713882, -9.536743e-07, -12.021967)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.345713, -9.536743e-07, -12.021967)
 
 [node name="Marker3D4" type="Marker3D" parent="WeakEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2657404, -9.536743e-07, -16.085035)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2657404, -9.536743e-07, -18.08322)
 
 [node name="Marker3D5" type="Marker3D" parent="WeakEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7431955, 0, -17.138512)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7431955, 0, -23.657925)
 
 [node name="Marker3D6" type="Marker3D" parent="WeakEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.9741693, 0, -9.178132)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.189068, 0, -10.857986)
 
 [node name="Marker3D7" type="Marker3D" parent="WeakEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.321022, 0, -11.556181)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.999847, 0, -1.0929356)
 
 [node name="AggressiveEnemySpawnPoints" type="Node3D" parent="."]
 
@@ -151,28 +151,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.321022, 0, -11.556181)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2050848, -9.536743e-07, -12.504933)
 
 [node name="Marker3D2" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.109681, -9.536743e-07, -25.560993)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.109681, -9.536743e-07, -29.662304)
 
 [node name="Marker3D3" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5989351, -9.536743e-07, -27.944012)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.50892, -9.536743e-07, -27.944012)
 
 [node name="Marker3D4" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.401065, -9.536743e-07, -27.944012)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.401065, -9.536743e-07, -31.809605)
 
 [node name="Marker3D5" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.927238, -9.536743e-07, -24.13409)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2052555, -9.536743e-07, -45.381733)
 
 [node name="Marker3D6" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.623774, -9.536743e-07, -12.172773)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.351099, -9.536743e-07, -12.172773)
 
 [node name="Marker3D7" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.374149, -9.536743e-07, -9.522)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.252903, -9.536743e-07, -9.522)
 
 [node name="Marker3D8" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.397724, -9.536743e-07, -8.281285)
 
 [node name="Marker3D9" type="Marker3D" parent="AggressiveEnemySpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.111038, -9.536743e-07, -13.477882)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.49527, -9.536743e-07, -13.477882)
 
 [node name="EnemiesContainer" type="Node3D" parent="."]
 
