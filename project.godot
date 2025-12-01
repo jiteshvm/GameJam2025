@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GameJam2025"
-run/main_scene="uid://b36u7no0d0kth"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.5")
 
 [display]
