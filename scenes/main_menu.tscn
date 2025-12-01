@@ -80,7 +80,8 @@ text = "CONTROLS:
 - W/A/S/D: Move
 - J: Attack
 - K: Push
-- L: Pull"
+- L: Pull
+- Esc: Pause"
 
 [node name="Logo1" type="Sprite2D" parent="."]
 position = Vector2(1318, 477.99994)
