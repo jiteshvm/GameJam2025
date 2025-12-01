@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l282cl3sefg7"
-path="res://.godot/imported/quit.png-2d3483e0378a29f446efeef481e540c6.ctex"
+uid="uid://ba1rn16hkfdkv"
+path="res://.godot/imported/quithover.png-43399f458389323f9ee2d2c59015d62d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pausemenu/quit.png"
-dest_files=["res://.godot/imported/quit.png-2d3483e0378a29f446efeef481e540c6.ctex"]
+source_file="res://assets/UI/pausemenu/quithover.png"
+dest_files=["res://.godot/imported/quithover.png-43399f458389323f9ee2d2c59015d62d.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba1rn16hkfdkv"
-path="res://.godot/imported/quithover.png-560d0bdcc9b273fdcbc2efcf4fa69b79.ctex"
+uid="uid://b7s3gy3ctbs2k"
+path="res://.godot/imported/Start_Hover_btn.png-fb5489d11fe89499e2261dbcca85e259.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pausemenu/quithover.png"
-dest_files=["res://.godot/imported/quithover.png-560d0bdcc9b273fdcbc2efcf4fa69b79.ctex"]
+source_file="res://assets/UI/mainmenu/Start_Hover_btn.png"
+dest_files=["res://.godot/imported/Start_Hover_btn.png-fb5489d11fe89499e2261dbcca85e259.ctex"]
 
 [params]
 
