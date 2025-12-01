@@ -570,6 +570,7 @@ target_position = Vector3(0, 0, 0)
 
 [node name="DebugLabel3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1998281, 0)
+visible = false
 billboard = 1
 text = "test"
 
