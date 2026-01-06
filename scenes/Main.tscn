@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cix450eg4kftb"]
+[gd_scene load_steps=31 format=3 uid="uid://cix450eg4kftb"]
 
 [ext_resource type="Script" uid="uid://6cclp23qyjmc" path="res://scripts/managers/CollisionLayersManager.gd" id="1_bjd11"]
 [ext_resource type="PackedScene" uid="uid://bc5bcxbqmbply" path="res://assets/First Level/Ceiling_Level_01_Low_01.glb" id="1_vcsgt"]
@@ -23,6 +23,11 @@
 [ext_resource type="Script" uid="uid://153vcemo4fwa" path="res://features/combat/ComboDesignerHUD.gd" id="15_combohud"]
 [ext_resource type="PackedScene" uid="uid://bhxnqlywhnl8b" path="res://scenes/PauseMenu.tscn" id="17_ft6cd"]
 [ext_resource type="Material" uid="uid://b40cba0rub88l" path="res://resources/materials/interior_walls_level_material_3d.tres" id="18_2ofn6"]
+[ext_resource type="PackedScene" uid="uid://djv65mho2rk47" path="res://assets/Fix assets/Big_Computer_Left_Low_Fix_01.fbx" id="21_fs0b5"]
+[ext_resource type="PackedScene" uid="uid://bhsno8fp835ad" path="res://assets/Fix assets/Big_Computer_Center_Low_Fix_01.fbx" id="22_ma7h6"]
+[ext_resource type="PackedScene" uid="uid://2judicu1aujw" path="res://assets/Fix assets/Big_Computer_Right_Low_Fix_01.fbx" id="23_e2s0e"]
+[ext_resource type="Material" uid="uid://cnnuxluansofe" path="res://resources/materials/big_computer_side_material.tres" id="24_e2s0e"]
+[ext_resource type="Material" uid="uid://bm7creq5k4gtk" path="res://resources/materials/big_computer_center_material.tres" id="24_ma7h6"]
 
 [sub_resource type="Environment" id="Environment_lhr70"]
 background_mode = 2
@@ -121,6 +126,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5947614, 0.39723206, -3.90
 
 [node name="Barrel_Low_03" parent="Barrels" instance=ExtResource("6_c01mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.547009, 0.39723206, -3.9063644)
+
+[node name="Big_Computer" type="Node3D" parent="."]
+
+[node name="Big_Computer_Center_Low_Fix_01" parent="Big_Computer" instance=ExtResource("22_ma7h6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.32019, 1.3524935, -20.307447)
+
+[node name="Big_Computer_Center_Low_01" parent="Big_Computer/Big_Computer_Center_Low_Fix_01" index="0"]
+transform = Transform3D(1.5511416, -1.8491045e-07, -4.959686e-14, 1.1021524e-14, -3.6982098e-07, 1.5511415, -1.8491045e-07, -1.5511415, -3.6982098e-07, -8.6284224e-08, -1.7256846e-07, -0.72380453)
+surface_material_override/0 = ExtResource("24_ma7h6")
+
+[node name="Big_Computer_Left_Low_Fix_01" parent="Big_Computer" instance=ExtResource("21_fs0b5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.688633, 1.3508832, -19.68496)
+
+[node name="Big_Computer_Left_Low_01" parent="Big_Computer/Big_Computer_Left_Low_Fix_01" index="0"]
+transform = Transform3D(-1.5511416, 1.8491045e-07, 7.715067e-14, 1.6532286e-14, -5.5473146e-07, 1.5511415, -1.8491046e-07, -1.5511415, -5.5473146e-07, 8.6284224e-08, -2.5885268e-07, -0.72380453)
+surface_material_override/0 = ExtResource("24_e2s0e")
+
+[node name="Big_Computer_Right_Low_Fix_01" parent="Big_Computer" instance=ExtResource("23_e2s0e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.964567, 1.3508812, -19.58368)
+
+[node name="Big_Computer_Right_Low_01" parent="Big_Computer/Big_Computer_Right_Low_Fix_01" index="0"]
+transform = Transform3D(1.5511416, -1.8491045e-07, -4.959686e-14, 1.1021524e-14, -3.6982098e-07, 1.5511415, -1.8491045e-07, -1.5511415, -3.6982098e-07, -8.6284224e-08, -1.7256846e-07, -0.72380453)
+surface_material_override/0 = ExtResource("24_e2s0e")
 
 [node name="WeakEnemySpawnPoints" type="Node3D" parent="."]
 
@@ -260,3 +288,6 @@ scroll_active = false
 [editable path="NavigationRegion3D/LevelGeometry/Exterior_Walls_Level_01_Low_01"]
 [editable path="NavigationRegion3D/LevelGeometry/Floor_Level_01_Low_01"]
 [editable path="NavigationRegion3D/LevelGeometry/interior_Walls_Level_01_Low_01"]
+[editable path="Big_Computer/Big_Computer_Center_Low_Fix_01"]
+[editable path="Big_Computer/Big_Computer_Left_Low_Fix_01"]
+[editable path="Big_Computer/Big_Computer_Right_Low_Fix_01"]
